@@ -1,0 +1,22 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "An example of telegram bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoonJS/telegram-bot.git"
+  },
+  "author": "babanov.js@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoonJS/telegram-bot/issues"
+  },
+  "homepage": "https://github.com/CoonJS/telegram-bot#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
