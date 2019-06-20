@@ -7,7 +7,6 @@ const chatId = '347227894';
 const text = 'HELLO WORLD';
 
 const requestURL = `https://api.telegram.org/bot${token}/sendMessage?chat_id=-${chatId}&text=Hello + World`;
-console.log(requestURL, 'tok')
 
 const port = 443;
 const app = express();
