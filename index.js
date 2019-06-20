@@ -1,7 +1,24 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
+
+const token = fs.readFileSync('./token.txt');
+const chatId = '347227894';
+
+const text = 'HELLO WORLD';
+const requestURL = `https://api.telegram.org/bot${token}/sendMessage?chatId=g${chatId}&text=Hello + World`;
+
+const port = 443;
 const app = express();
-const port = 3000;
+const options = {
+    key: fs.readFileSync('./domain.key'),
+    cert: fs.readFileSync('./domain.crt')
+};
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => {
+    res.send("IT'S WORKING!")
+});
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+https.createServer(options, app).listen(port, () => {
+    console.log('server running at ' + port)
+});
