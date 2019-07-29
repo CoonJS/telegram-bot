@@ -11,9 +11,9 @@ const tmAPI = new TelegramApiController(token)
 const app = express()
 const port = 80
 
-app.get('/', (req, res) => {
+app.get('/', (request, response) => {
     tmAPI.sendMessage({ chatId, text }, (err, res, body) => {
-        res.send(body)
+        response.send(body)
     })
 })
 
