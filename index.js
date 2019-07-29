@@ -12,9 +12,8 @@ const app = express()
 const port = 80
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
     tmAPI.sendMessage({ chatId, text }, (err, res, body) => {
-        console.log(body)
+        res.send(body)
     })
 })
 
