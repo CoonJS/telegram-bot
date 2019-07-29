@@ -19,9 +19,9 @@
   "homepage": "https://github.com/CoonJS/telegram-bot#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-http-proxy": "^1.5.1",
-    "http-proxy": "^1.17.0",
-    "node-telegram-bot-api": "^0.30.0",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "prettier": "1.18.2"
   }
 }
