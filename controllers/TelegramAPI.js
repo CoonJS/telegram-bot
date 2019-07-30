@@ -12,10 +12,18 @@ class TelegramAPIController {
 
     sendMessage({ chatId, text }, cb) {
         request(
-            `${this.rootURL}/sendMessage?chat_id=-${chatId}&text=${text}`,
+            `${this.rootURL}/sendMessage?chat_id=${chatId}&text=${text}`,
             { json: true },
             cb
         )
+    }
+
+    getUpdates(cb) {
+        request(`${this.rootURL}/getUpdates`, { json: true }, cb)
+    }
+
+    setWebHook(url) {
+        request(`${this.rootURL}/setWebhook`, { json: true }, cb)
     }
 }
 
