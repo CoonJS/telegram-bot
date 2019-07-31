@@ -51,20 +51,16 @@ let offset = 0
 //     })
 // }, 2000)
 
+app.get('/', (req, res) => {
+    res.writeHead(200)
+    res.end('hello world')
+})
+
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, 'domain.key'), 'utf8'),
     cert: fs.readFileSync(path.resolve(__dirname, 'domain.crt'), 'utf8'),
 }
 
-http.createServer((req, res) => {
-    res.writeHead(200)
-    res.end('hello world')
-}).listen(80)
+http.createServer(app).listen(80)
 
-https
-    .createServer(options, function(req, res) {
-        res.writeHead(200)
-        console.log(req, res, 'req')
-        res.end('hello world secure')
-    })
-    .listen(443)
+https.createServer(options, app).listen(443)
