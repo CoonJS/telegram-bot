@@ -56,9 +56,15 @@ app.use(bodyParser.json({ type: 'application/*+json' }))
 app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(bodyParser.text({ type: 'text/html' }))
 
+app.all('/*', function(req, res, next) {
+    console.log(req.body)
+    console.log('\n')
+    next()
+})
+
 app.get('/', (req, res) => {
     res.writeHead(200)
-    console.log(req)
+    console.log(req.body)
     console.log('\n')
     res.end('hello world')
 })
