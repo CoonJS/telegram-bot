@@ -64,6 +64,7 @@ http.createServer((req, res) => {
 https
     .createServer(options, function(req, res) {
         res.writeHead(200)
+        console.log(req, res, 'req')
         res.end('hello world secure')
     })
     .listen(443)
