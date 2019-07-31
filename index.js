@@ -58,6 +58,8 @@ app.use(bodyParser.text({ type: 'text/html' }))
 
 app.get('/', (req, res) => {
     res.writeHead(200)
+    console.log(req)
+    console.log('\n')
     res.end('hello world')
 })
 
