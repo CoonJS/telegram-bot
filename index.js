@@ -5,7 +5,6 @@ const https = require('https')
 const express = require('express')
 const Store = require('data-store')
 const bodyParser = require('body-parser')
-const differenceBy = require('lodash/differenceBy')
 
 const token = require('./token')
 const TelegramApiController = require('./controllers/TelegramAPI')
@@ -27,16 +26,31 @@ app.use(
     })
 )
 
+app.post('/', (req, res) => {
+    console.log(req.body)
+    res.status(200).send({})
+})
+
+app.get(`/${token}/`, (req, res) => {
+    console.log(req.body)
+    res.status(200).send({})
+})
+
 app.get('/', (req, res) => {
-    res.writeHead(200)
     console.log(req.body)
     console.log('\n')
-    res.end('hello world')
+    res.status(200).send({})
 })
 
 const options = {
-    key: fs.readFileSync(path.resolve(__dirname, 'domain.key'), 'utf8'),
-    cert: fs.readFileSync(path.resolve(__dirname, 'domain.crt'), 'utf8'),
+    key: fs.readFileSync(
+        '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
+        'utf8'
+    ),
+    cert: fs.readFileSync(
+        '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
+        'utf8'
+    ),
 }
 
 http.createServer(app).listen(80)
