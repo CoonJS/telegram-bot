@@ -21,14 +21,16 @@ app.use(
 )
 
 app.post(`/${token}/`, (req, res) => {
-    console.log(req, 'post')
+    console.log(req.body.message, 'post')
     console.log('\n')
     console.log('\n')
     res.status(200).send({})
 })
 
 app.get(`/${token}/`, (req, res) => {
-    console.log(req, 'get')
+    console.log(req.body.message, 'get')
+    console.log('\n')
+    console.log('\n')
     res.status(200).send({})
 })
 
