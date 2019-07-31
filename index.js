@@ -26,13 +26,13 @@ app.use(
     })
 )
 
-app.post('/', (req, res) => {
-    console.log(req.body)
+app.post(`/${token}/`, (req, res) => {
+    console.log(req.body, 'post')
     res.status(200).send({})
 })
 
 app.get(`/${token}/`, (req, res) => {
-    console.log(req.body)
+    console.log(req.body, 'get')
     res.status(200).send({})
 })
 
