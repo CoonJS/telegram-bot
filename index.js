@@ -55,6 +55,8 @@ const options = {
     cert: fs.readFileSync('/etc/letsencrypt/csr/0000_csr-certbot.pem'),
 }
 
+console.log(options, 'options')
+
 app.get('/', (request, response) => {
     response.send('Telegram Bot')
 })
