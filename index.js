@@ -3,22 +3,16 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const express = require('express')
-const Store = require('data-store')
 const bodyParser = require('body-parser')
 
 const token = require('./token')
 const TelegramApiController = require('./controllers/TelegramAPI')
 
-const store = new Store({ name: 'Updates', path: 'store.json' })
-store.set('lastUpdates', [])
-
 const tmAPI = new TelegramApiController(token)
 
 const app = express()
 
-app.use(bodyParser.json({ type: 'application/*+json' }))
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
-app.use(bodyParser.text({ type: 'text/html' }))
+app.use(bodyParser.json())
 
 app.use(
     express.static(path.resolve(__dirname, './encrypt'), {
@@ -27,12 +21,14 @@ app.use(
 )
 
 app.post(`/${token}/`, (req, res) => {
-    console.log(req.body, 'post')
+    console.log(req, 'post')
+    console.log('\n')
+    console.log('\n')
     res.status(200).send({})
 })
 
 app.get(`/${token}/`, (req, res) => {
-    console.log(req.body, 'get')
+    console.log(req, 'get')
     res.status(200).send({})
 })
 
