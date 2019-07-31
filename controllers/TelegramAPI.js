@@ -12,7 +12,9 @@ class TelegramAPIController {
 
     sendMessage({ chatId, text }, cb) {
         request(
-            `${this.rootURL}/sendMessage?chat_id=${chatId}&text=${text}`,
+            `${this.rootURL}/sendMessage?chat_id=${chatId}&text=${encodeURI(
+                text
+            )}`,
             { json: true },
             cb
         )
