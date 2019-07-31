@@ -51,8 +51,8 @@ let offset = 0
 // }, 2000)
 
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/keys/0000_key-certbot.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/csr/0000_csr-certbot.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/keys/0000_key-certbot.pem', 'utf8'),
+    cert: fs.readFileSync('/etc/letsencrypt/csr/0000_csr-certbot.pem', 'utf8'),
 }
 
 console.log(options, 'options')
