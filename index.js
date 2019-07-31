@@ -16,51 +16,16 @@ store.set('lastUpdates', [])
 const tmAPI = new TelegramApiController(token)
 
 const app = express()
-const port = 80
-//
-// tmAPI.getUpdates((err, res, body) => {
-//     const items = body.result.filter(item => item.message !== undefined)
-//     store.set('lastUpdates', items)
-// })
-
-let offset = 0
-
-// setInterval(() => {
-//     const lastUpdates = store.get('lastUpdates', [])
-//
-//     if (lastUpdates.length >= 10) {
-//         offset += 10
-//     }
-//
-//     tmAPI.getUpdates((err, res, body) => {
-//         const items = body.result.filter(item => item.message !== undefined)
-//
-//         const preparedLastUpdates = lastUpdates.filter(
-//             item => item.message !== undefined
-//         )
-//
-//         const diff = differenceBy(items, preparedLastUpdates, 'message.date')
-//
-//         diff.forEach(item => {
-//             tmAPI.sendMessage({
-//                 chatId: item.message.chat.id,
-//                 text: item.message.text,
-//             })
-//         })
-//
-//         store.set('lastUpdates', items)
-//     })
-// }, 2000)
 
 app.use(bodyParser.json({ type: 'application/*+json' }))
 app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(bodyParser.text({ type: 'text/html' }))
 
-app.all('/*', function(req, res, next) {
-    console.log(req.body)
-    console.log('\n')
-    next()
-})
+app.use(
+    express.static(path.resolve(__dirname, './encrypt'), {
+        dotfiles: 'allow',
+    })
+)
 
 app.get('/', (req, res) => {
     res.writeHead(200)
