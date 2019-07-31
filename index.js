@@ -21,22 +21,20 @@ app.use(
 )
 
 app.post(`/${token}/`, (req, res) => {
-    console.log(req.body.message, 'post')
-    console.log('\n')
-    console.log('\n')
+    const chatId = req.body.message.chat.id
+    const text = req.body.message.text
+    tmAPI.sendMessage({ chatId, text })
+
     res.status(200).send({})
 })
 
 app.get(`/${token}/`, (req, res) => {
     console.log(req.body.message, 'get')
-    console.log('\n')
-    console.log('\n')
+
     res.status(200).send({})
 })
 
 app.get('/', (req, res) => {
-    console.log(req.body)
-    console.log('\n')
     res.status(200).send({})
 })
 
