@@ -4,6 +4,7 @@ const http = require('http')
 const https = require('https')
 const express = require('express')
 const Store = require('data-store')
+const bodyParser = require('body-parser')
 const differenceBy = require('lodash/differenceBy')
 
 const token = require('./token')
@@ -50,6 +51,10 @@ let offset = 0
 //         store.set('lastUpdates', items)
 //     })
 // }, 2000)
+
+app.use(bodyParser.json({ type: 'application/*+json' }))
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
+app.use(bodyParser.text({ type: 'text/html' }))
 
 app.get('/', (req, res) => {
     res.writeHead(200)
