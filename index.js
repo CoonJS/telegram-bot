@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const http = require('http')
 const https = require('https')
 const express = require('express')
@@ -51,16 +52,18 @@ let offset = 0
 // }, 2000)
 
 const options = {
-    key: fs.readFileSync('/etc/letsencrypt/keys/0000_key-certbot.pem', 'utf8'),
-    cert: fs.readFileSync('/etc/letsencrypt/csr/0000_csr-certbot.pem', 'utf8'),
+    key: fs.readFileSync(path.resolve(__dirname, 'domain.key'), 'utf8'),
+    cert: fs.readFileSync(path.resolve(__dirname, 'domain.crt'), 'utf8'),
 }
 
-console.log(options, 'options')
+http.createServer((req, res) => {
+    res.writeHead(200)
+    res.end('hello world')
+}).listen(80)
 
-app.get('/', (request, response) => {
-    response.send('Telegram Bot')
-})
-
-http.createServer(app).listen(80)
-
-https.createServer(options, app).listen(443)
+https
+    .createServer(options, function(req, res) {
+        res.writeHead(200)
+        res.end('hello world secure')
+    })
+    .listen(443)
