@@ -26,6 +26,11 @@ class TelegramAPIController {
 
         const query = queryString.stringify(data)
 
+        console.log(
+            `${this.rootURL}/sendMessage?${query}`,
+            '`${this.rootURL}/sendMessage?${query}`'
+        )
+
         request(`${this.rootURL}/sendMessage?${query}`, { json: true }, cb)
     }
 
