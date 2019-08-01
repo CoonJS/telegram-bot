@@ -17,9 +17,9 @@ class TelegramAPIController {
         request(`${this.rootURL}/getMe`, { json: true }, cb)
     }
 
-    sendMessage({ chatId, text, options }, cb) {
+    sendMessage({ chat_id, text, options }, cb) {
         const data = {
-            chatId,
+            chat_id,
             text: encodeURI(text),
             reply_markup,
         }
