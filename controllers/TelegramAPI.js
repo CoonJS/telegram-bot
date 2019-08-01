@@ -16,16 +16,10 @@ class TelegramAPIController {
             resize_keyboard: true,
             one_time_keyboard: true,
             keyboard: [
-                {
-                    text: 'Share your phone',
-                    request_contact: true,
-                    request_location: false,
-                },
-                {
-                    text: 'Share you location',
-                    request_contact: false,
-                    request_location: true,
-                },
+                ['uno :+1:'],
+                ['uno \ud83d\udc4d', 'due'],
+                ['uno', 'due', 'tre'],
+                ['uno', 'due', 'tre', 'quattro'],
             ],
         }
 
