@@ -21,9 +21,11 @@ app.use(
 )
 
 app.post(`/${token}/`, (req, res) => {
-    const chatId = req.body.message.chat.id
-    const text = req.body.message.text
-    tmAPI.sendMessage({ chatId, text })
+    // const chatId = req.body.message.chat.id
+    // const text = req.body.message.text
+    // tmAPI.sendMessage({ chatId, text })
+
+    console.log(req.body, 'body')
 
     res.status(200).send({})
 })
