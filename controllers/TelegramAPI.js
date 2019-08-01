@@ -21,7 +21,6 @@ class TelegramAPIController {
         const data = {
             chat_id,
             text: encodeURI(text),
-            reply_markup,
         }
 
         const query = queryString.stringify(data)
