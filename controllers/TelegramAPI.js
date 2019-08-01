@@ -1,11 +1,14 @@
 const request = require('request')
 const queryString = require('query-string')
 
-const reply_markup = {
-    resize_keyboard: true,
-    one_time_keyboard: true,
-    keyboard: [['yes'], ['no']],
-}
+const reply_markup =
+    Math.random > 0.5
+        ? {
+              resize_keyboard: true,
+              one_time_keyboard: true,
+              keyboard: [['yes'], ['no']],
+          }
+        : {}
 
 class TelegramAPIController {
     constructor(TOKEN) {
