@@ -12,14 +12,22 @@ class TelegramAPIController {
     }
 
     sendMessage({ chat_id, text, options }, cb) {
-        const reply_markup =
-            Math.random() > 0.5
-                ? {
-                      resize_keyboard: true,
-                      one_time_keyboard: true,
-                      keyboard: [['yes'], ['no']],
-                  }
-                : {}
+        const reply_markup = {
+            resize_keyboard: true,
+            one_time_keyboard: true,
+            keyboard: [
+                {
+                    text: 'Share your phone',
+                    request_contact: true,
+                    request_location: false,
+                },
+                {
+                    text: 'Share you location',
+                    request_contact: false,
+                    request_location: true,
+                },
+            ],
+        }
 
         const data = {
             chat_id,
