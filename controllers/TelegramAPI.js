@@ -1,4 +1,11 @@
 const request = require('request')
+const queryString = require('query-string')
+
+const reply_markup = {
+    resize_keyboard: true,
+    one_time_keyboard: true,
+    keyboard: [['yes'], ['no']],
+}
 
 class TelegramAPIController {
     constructor(TOKEN) {
@@ -10,14 +17,16 @@ class TelegramAPIController {
         request(`${this.rootURL}/getMe`, { json: true }, cb)
     }
 
-    sendMessage({ chatId, text }, cb) {
-        request(
-            `${this.rootURL}/sendMessage?chat_id=${chatId}&text=${encodeURI(
-                text
-            )}`,
-            { json: true },
-            cb
-        )
+    sendMessage({ chatId, text, options }, cb) {
+        const data = {
+            chatId,
+            text: encodeURI(text),
+            reply_markup,
+        }
+
+        const query = queryString.stringify(data)
+
+        request(`${this.rootURL}/sendMessage?${query}`, { json: true }, cb)
     }
 
     getUpdates(cb) {
