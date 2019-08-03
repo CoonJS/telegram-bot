@@ -39,7 +39,19 @@ class TelegramAPIController {
     }
 
     setWebHook(url) {
-        request(`${this.rootURL}/setWebhook`, { json: true }, cb)
+        request(`${this.rootURL}/setWebhook?url=${url}/${this.token}/`, {
+            json: true,
+        })
+    }
+
+    getWebHookInfo(cb) {
+        request(
+            `${this.rootURL}/getWebhookInfo`,
+            {
+                json: true,
+            },
+            cb
+        )
     }
 }
 

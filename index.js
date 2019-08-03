@@ -12,6 +12,24 @@ const tmAPI = new TelegramApiController(token)
 
 const app = express()
 
+const env = app.get('env')
+const PROD_MODE = env === 'produciton'
+const DEV_MODE = env === 'development'
+
+if (DEV_MODE) {
+    tmAPI.setWebHook('https://ca3dc1ab.ngrok.io:443')
+    tmAPI.getWebHookInfo((req, res) => {
+        console.log(res.body)
+    })
+}
+
+if (PROD_MODE) {
+    tmAPI.setWebHook('http://telegram-bot.oxem.ru:443')
+    tmAPI.getWebHookInfo((req, res) => {
+        console.log(res.body)
+    })
+}
+
 app.use(bodyParser.json())
 
 app.use(
@@ -38,16 +56,18 @@ app.get('/', (req, res) => {
     res.status(200).send({})
 })
 
-const options = {
-    key: fs.readFileSync(
-        '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
-        'utf8'
-    ),
-    cert: fs.readFileSync(
-        '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
-        'utf8'
-    ),
-}
+const options = PROD_MODE
+    ? {
+          key: fs.readFileSync(
+              '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
+              'utf8'
+          ),
+          cert: fs.readFileSync(
+              '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
+              'utf8'
+          ),
+      }
+    : {}
 
 http.createServer(app).listen(80)
 
