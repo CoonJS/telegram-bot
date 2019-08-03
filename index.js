@@ -16,6 +16,8 @@ const env = app.get('env')
 const PROD_MODE = env === 'production'
 const DEV_MODE = env === 'development'
 
+console.log(env, 'NODE_ENV')
+
 if (DEV_MODE) {
     tmAPI.setWebHook('https://ca3dc1ab.ngrok.io:443')
     tmAPI.getWebHookInfo((req, res) => {
