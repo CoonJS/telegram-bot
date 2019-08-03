@@ -26,7 +26,7 @@ if (DEV_MODE) {
 }
 
 if (PROD_MODE) {
-    tmAPI.setWebHook('http://telegram-bot.oxem.ru:443')
+    tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
     tmAPI.getWebHookInfo((req, res) => {
         console.log(res.body)
     })
