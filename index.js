@@ -13,7 +13,7 @@ const tmAPI = new TelegramApiController(token)
 const app = express()
 
 const env = app.get('env')
-const PROD_MODE = env === 'produciton'
+const PROD_MODE = env === 'production'
 const DEV_MODE = env === 'development'
 
 if (DEV_MODE) {
