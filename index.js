@@ -42,16 +42,16 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     const TelegramApiController = require('./controllers/TelegramAPI')
     const tmAPI = new TelegramApiController(token)
 
-    if (DEV_MODE) {
-        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443')
+    if (PROD_MODE) {
+        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
         tmAPI.getWebHookInfo((req, res) => {
             console.log(res.body)
             console.log('\n')
         })
     }
 
-    if (PROD_MODE) {
-        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
+    if (DEV_MODE) {
+        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443')
         tmAPI.getWebHookInfo((req, res) => {
             console.log(res.body)
             console.log('\n')
