@@ -21,6 +21,7 @@ module.exports = function(app, db, tmAPI) {
             username: message.from.username,
             count: 0,
         }
+        console.log(userObject, 'userObject')
 
         usersCollection.findOne(
             { user_id: userObject.user_id },
