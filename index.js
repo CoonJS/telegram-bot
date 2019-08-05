@@ -4,59 +4,21 @@ const http = require('http')
 const https = require('https')
 const express = require('express')
 const bodyParser = require('body-parser')
-
-const token = require('./token')
-const TelegramApiController = require('./controllers/TelegramAPI')
-
-const tmAPI = new TelegramApiController(token)
+const dbConfig = require('./db_config')
+const MongoClient = require('mongodb').MongoClient
 
 const app = express()
-
 const env = app.get('env')
 const PROD_MODE = env === 'production'
 const DEV_MODE = env === 'development'
 
-console.log(env, 'NODE_ENV')
-
-if (DEV_MODE) {
-    tmAPI.setWebHook('https://ca3dc1ab.ngrok.io:443')
-    tmAPI.getWebHookInfo((req, res) => {
-        console.log(res.body)
-    })
-}
-
-if (PROD_MODE) {
-    tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
-    tmAPI.getWebHookInfo((req, res) => {
-        console.log(res.body)
-    })
-}
-
 app.use(bodyParser.json())
-
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
     express.static(path.resolve(__dirname, './encrypt'), {
         dotfiles: 'allow',
     })
 )
-
-app.post(`/${token}/`, (req, res) => {
-    const chat_id = req.body.message.chat.id
-    const text = req.body.message.text
-    tmAPI.sendMessage({ chat_id, text })
-
-    res.status(200).send({})
-})
-
-app.get(`/${token}/`, (req, res) => {
-    console.log(req.body.message, 'get')
-
-    res.status(200).send({})
-})
-
-app.get('/', (req, res) => {
-    res.status(200).send({})
-})
 
 const options = PROD_MODE
     ? {
@@ -71,6 +33,34 @@ const options = PROD_MODE
       }
     : {}
 
-http.createServer(app).listen(80)
+MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
+    if (err) return console.log(err)
 
-https.createServer(options, app).listen(443)
+    const token = require('./token')
+    const TelegramApiController = require('./controllers/TelegramAPI')
+    const tmAPI = new TelegramApiController(token)
+
+    if (DEV_MODE) {
+        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443')
+        tmAPI.getWebHookInfo((req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+    }
+
+    if (PROD_MODE) {
+        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
+        tmAPI.getWebHookInfo((req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+    }
+
+    const db = client.db('chat')
+    const chatRouter = require('./routes/bot')(app, db, tmAPI)
+    const indexRouter = require('./routes/index')(app, db, tmAPI)
+
+    http.createServer(app).listen(80)
+
+    https.createServer(options, app).listen(443)
+})

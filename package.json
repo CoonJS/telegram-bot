@@ -4,7 +4,7 @@
   "description": "An example of telegram bot",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development && node index.js",
+    "start": "NODE_ENV=development && nodemon index.js",
     "start:dev": "NODE_ENV=development && node index.js",
     "start:prod": "NODE_ENV=production && node index.js",
     "ngrok": "./ngrok http 80",
@@ -23,10 +23,12 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "mongodb": "^3.3.0-beta2",
     "query-string": "^6.8.2",
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "nodemon": "^1.19.1",
     "prettier": "1.18.2"
   }
 }

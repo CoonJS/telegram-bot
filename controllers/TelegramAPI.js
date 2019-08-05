@@ -12,21 +12,9 @@ class TelegramAPIController {
     }
 
     sendMessage({ chat_id, text, options }, cb) {
-        const reply_markup = {
-            resize_keyboard: true,
-            one_time_keyboard: true,
-            keyboard: [
-                ['uno :+1:'],
-                ['uno \ud83d\udc4d', 'due'],
-                ['uno', 'due', 'tre'],
-                ['uno', 'due', 'tre', 'quattro'],
-            ],
-        }
-
         const data = {
             chat_id,
             text,
-            reply_markup: JSON.stringify(reply_markup),
         }
 
         const query = queryString.stringify(data)
@@ -39,9 +27,12 @@ class TelegramAPIController {
     }
 
     setWebHook(url) {
-        request(`${this.rootURL}/setWebhook?url=${url}/${this.token}/`, {
-            json: true,
-        })
+        request(
+            `${this.rootURL}/allowed_updates=message&setWebhook?url=${url}/${this.token}/`,
+            {
+                json: true,
+            }
+        )
     }
 
     getWebHookInfo(cb) {
