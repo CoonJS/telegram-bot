@@ -1,6 +1,4 @@
-const token = require('../token')
-
-module.exports = function(app, db, tmAPI) {
+module.exports = function(app, db, token, tmAPI) {
     const usersCollection = db.collection('users')
 
     app.post(`/${token}/`, (req, res) => {

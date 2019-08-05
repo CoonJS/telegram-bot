@@ -4,8 +4,10 @@ const http = require('http')
 const https = require('https')
 const express = require('express')
 const bodyParser = require('body-parser')
-const dbConfig = require('./db_config')
 const MongoClient = require('mongodb').MongoClient
+
+const token = require('./token')
+const dbConfig = require('./db_config')
 
 const app = express()
 const env = app.get('env')
@@ -38,7 +40,6 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     console.log(`APP RUNNING IN ${env.toUpperCase()} MODE`)
 
-    const token = require('./token')
     const TelegramApiController = require('./controllers/TelegramAPI')
     const tmAPI = new TelegramApiController(token)
 
@@ -67,7 +68,7 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     }
 
     const db = client.db('chat')
-    const chatRouter = require('./routes/bot')(app, db, tmAPI)
+    const chatRouter = require('./routes/bot')(app, db, token, tmAPI)
     const indexRouter = require('./routes/index')(app, db, tmAPI)
 
     http.createServer(app).listen(80)
