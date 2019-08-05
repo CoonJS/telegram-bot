@@ -54,17 +54,17 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
         })
     }
 
-    // if (DEV_MODE) {
-    //     console.log('SET DEV WEBHOOK')
-    //     tmAPI.setWebHook('https://f3356fd7.ngrok.io:443', (req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    //     tmAPI.getWebHookInfo((req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    // }
+    if (DEV_MODE) {
+        console.log('SET DEV WEBHOOK')
+        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443', (req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+        tmAPI.getWebHookInfo((req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+    }
 
     const db = client.db('chat')
     const chatRouter = require('./routes/bot')(app, db, tmAPI)
