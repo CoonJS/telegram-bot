@@ -1,3 +1,6 @@
+const request = require('request')
+const parseString = require('xml2js').parseString
+
 module.exports = function(app, db, token, tmAPI) {
     const usersCollection = db.collection('users')
 
@@ -5,10 +8,35 @@ module.exports = function(app, db, token, tmAPI) {
         const message = req.body.message
 
         const hasMessage = message !== undefined
+        const hasLocation = hasMessage
+            ? req.body.message.location !== undefined
+            : false
 
         if (!hasMessage) {
             res.status(200).send({})
             return
+        }
+
+        if (hasLocation) {
+            const { latitude, longitude } = req.body.message.location
+            request(
+                `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${latitude},${longitude}&key=5d5ddd730db04ec790e194934190508`,
+                { json: true },
+                (err, res) => {
+                    parseString(res.body, (error, result) => {
+                        const currentCondition =
+                            result.data.current_condition[0]
+                        const time = currentCondition.observation_time[0]
+                        const temp = currentCondition.temp_C[0]
+                        const windSpeed = currentCondition.windspeedKmph[0]
+
+                        tmAPI.sendMessage({
+                            chat_id: message.chat.id,
+                            text: `Time: ${time}\nTemperature: ${temp} ℃\nWind speed: ${windSpeed} kmph\n`,
+                        })
+                    })
+                }
+            )
         }
 
         const userObject = {
@@ -45,6 +73,17 @@ module.exports = function(app, db, token, tmAPI) {
                             chat_id,
                             text: `Hi ${user.first_name} ${user.last_name} - you sent ${user.count} messages`,
                         })
+
+                        return
+                    }
+
+                    if (message.text === '/allactivity@MyChatAnalyzerBot') {
+                        const test = usersCollection.find()
+                        console.log(test, 'test')
+                    }
+
+                    if (message.text === '/weather@MyChatAnalyzerBot') {
+                        console.log(req.body, 'req.body')
                     }
                 }
             }

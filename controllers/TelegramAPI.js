@@ -48,6 +48,32 @@ class TelegramAPIController {
             cb
         )
     }
+
+    getLocationRequest({}, cb) {
+        const query = queryString.stringify({
+            parse_mode: 'Markdown',
+            reply_markup: JSON.stringify({
+                one_time_keyboard: true,
+                keyboard: [
+                    [
+                        {
+                            text: 'My phone number',
+                            request_contact: true,
+                        },
+                    ],
+                    ['Cancel'],
+                ],
+            }),
+        })
+
+        request(
+            `${this.rootURL}/sendMessage?${query}`,
+            {
+                json: true,
+            },
+            cb
+        )
+    }
 }
 
 module.exports = TelegramAPIController

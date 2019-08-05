@@ -25,7 +25,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.3.0-beta2",
     "query-string": "^6.8.2",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "nodemon": "^1.19.1",
