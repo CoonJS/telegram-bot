@@ -44,7 +44,10 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     if (PROD_MODE) {
         console.log('SET PRODUCTION WEBHOOK')
-        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443')
+        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
         tmAPI.getWebHookInfo((req, res) => {
             console.log(res.body)
             console.log('\n')
@@ -53,7 +56,10 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     if (DEV_MODE) {
         console.log('SET DEV WEBHOOK')
-        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443', (req, res) => {})
+        tmAPI.setWebHook('https://f3356fd7.ngrok.io:443', (req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
         tmAPI.getWebHookInfo((req, res) => {
             console.log(res.body)
             console.log('\n')

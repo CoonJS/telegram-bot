@@ -31,7 +31,8 @@ class TelegramAPIController {
             `${this.rootURL}/allowed_updates=message&setWebhook?url=${url}/${this.token}/`,
             {
                 json: true,
-            }
+            },
+            cb
         )
     }
 
