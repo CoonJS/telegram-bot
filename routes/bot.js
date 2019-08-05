@@ -4,7 +4,6 @@ module.exports = function(app, db, token, tmAPI) {
     app.post(`/${token}/`, (req, res) => {
         const message = req.body.message
 
-        console.log(message, 'message')
         const hasMessage = message !== undefined
 
         if (!hasMessage) {
@@ -21,7 +20,6 @@ module.exports = function(app, db, token, tmAPI) {
             username: message.from.username,
             count: 0,
         }
-        console.log(userObject, 'userObject')
 
         usersCollection.findOne(
             { user_id: userObject.user_id },
