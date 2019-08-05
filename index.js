@@ -36,6 +36,8 @@ const options = PROD_MODE
 MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     if (err) return console.log(err)
 
+    console.log(`APP RUNNING IN ${env.toUpperCase()} MODE`)
+
     const token = require('./token')
     const TelegramApiController = require('./controllers/TelegramAPI')
     const tmAPI = new TelegramApiController(token)
