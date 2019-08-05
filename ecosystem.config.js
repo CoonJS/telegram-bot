@@ -4,11 +4,8 @@ module.exports = {
             name: 'tm-bot',
             script: './index.js',
             watch: true,
-            error_file: 'err.log',
-            out_file: 'out.log',
-            log_file: 'combined.log',
-            time: true,
             env: {
+                PORT: 80,
                 NODE_ENV: 'development',
             },
             env_production: {
