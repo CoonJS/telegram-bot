@@ -5,6 +5,8 @@ module.exports = function(app, db, tmAPI) {
 
     app.post(`/${token}/`, (req, res) => {
         const message = req.body.message
+
+        console.log(message, 'message')
         const hasMessage = message !== undefined
 
         if (!hasMessage) {
