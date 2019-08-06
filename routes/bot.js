@@ -19,6 +19,7 @@ module.exports = function(app, db, token, tmAPI) {
 
         if (hasLocation) {
             const { latitude, longitude } = req.body.message.location
+            console.log(latitude, longitude, 'latitude, longitude')
             request(
                 `http://api.worldweatheronline.com/premium/v1/weather.ashx?q=${latitude},${longitude}&key=5d5ddd730db04ec790e194934190508`,
                 { json: true },
@@ -29,6 +30,8 @@ module.exports = function(app, db, token, tmAPI) {
                         const time = currentCondition.observation_time[0]
                         const temp = currentCondition.temp_C[0]
                         const windSpeed = currentCondition.windspeedKmph[0]
+
+                        console.log(time, temp, 'time', 'temp')
 
                         tmAPI.sendMessage({
                             chat_id: message.chat.id,
