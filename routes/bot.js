@@ -46,48 +46,22 @@ module.exports = function(app, db, token, tmAPI) {
             first_name: message.from.first_name,
             last_name: message.from.last_name,
             username: message.from.username,
-            count: 0,
+            date: message.date,
         }
 
-        usersCollection.findOne(
-            { user_id: userObject.user_id },
-            (err, user) => {
-                if (err) {
-                } else {
-                    const hasItem = user !== null
+        if (message.text === '/myactivity@MyChatAnalyzerBot') {
+            const { chat_id, user_id, first_name, last_name } = userObject
+            usersCollection
+                .find({ user_id, chat_id })
+                .toArray((err, result) => {
+                    tmAPI.sendMessage({
+                        chat_id,
+                        text: `Hi ${first_name} ${last_name} - you sent ${result.length} messages`,
+                    })
+                })
+        }
 
-                    if (!hasItem) {
-                        usersCollection.insertOne(userObject)
-                    }
-
-                    if (hasItem) {
-                        usersCollection.updateOne(
-                            { user_id: user.user_id },
-                            { $set: { count: user.count + 1 } }
-                        )
-                    }
-
-                    if (message.text === '/myactivity@MyChatAnalyzerBot') {
-                        const { chat_id } = userObject
-                        tmAPI.sendMessage({
-                            chat_id,
-                            text: `Hi ${user.first_name} ${user.last_name} - you sent ${user.count} messages`,
-                        })
-
-                        return
-                    }
-
-                    if (message.text === '/allactivity@MyChatAnalyzerBot') {
-                        const test = usersCollection.find()
-                        console.log(test, 'test')
-                    }
-
-                    if (message.text === '/weather@MyChatAnalyzerBot') {
-                        console.log(req.body, 'req.body')
-                    }
-                }
-            }
-        )
+        usersCollection.insertOne(userObject)
 
         res.status(200).send({})
     })
