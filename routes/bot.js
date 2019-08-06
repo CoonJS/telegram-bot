@@ -49,6 +49,8 @@ module.exports = function(app, db, token, tmAPI) {
             date: message.date,
         }
 
+        usersCollection.insertOne(userObject)
+
         if (message.text === '/myactivity@MyChatAnalyzerBot') {
             const { chat_id, user_id, first_name, last_name } = userObject
             usersCollection
@@ -60,8 +62,6 @@ module.exports = function(app, db, token, tmAPI) {
                     })
                 })
         }
-
-        usersCollection.insertOne(userObject)
 
         res.status(200).send({})
     })
