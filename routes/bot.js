@@ -17,6 +17,8 @@ module.exports = function(app, db, token, tmAPI) {
             return
         }
 
+        console.log(hasLocation, 'hasLocation')
+
         if (hasLocation) {
             const { latitude, longitude } = req.body.message.location
             console.log(latitude, longitude, 'latitude, longitude')
