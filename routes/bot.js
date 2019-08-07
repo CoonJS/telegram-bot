@@ -85,7 +85,7 @@ module.exports = function(app, db, token, tmAPI) {
                         usersGroupByUserId[id][0].last_name
                     const activityPercent = percent.toFixed(2)
 
-                    messageResponse =
+                    messageResponse +=
                         userFullName + ' : ' + activityPercent + '\n'
                 })
 
