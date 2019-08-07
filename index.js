@@ -45,32 +45,32 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     const TelegramApiController = require('./controllers/TelegramAPI')
     const tmAPI = new TelegramApiController(token)
 
-    // if (PROD_MODE) {
-    //     console.log('SET PRODUCTION WEBHOOK')
-    //     tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    //     tmAPI.getWebHookInfo((req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    // }
-    //
-    // if (DEV_MODE) {
-    //     console.log('SET DEV WEBHOOK')
-    //     tmAPI.setWebHook('https://7886c393.ngrok.io:443', (req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    //     tmAPI.getWebHookInfo((req, res) => {
-    //         console.log(res.body)
-    //         console.log('\n')
-    //     })
-    // }
-    //
-    // const chatRouter = require('./routes/bot')(app, db, token, tmAPI)
-    // const indexRouter = require('./routes/index')(app, db, tmAPI)
+    if (PROD_MODE) {
+        console.log('SET PRODUCTION WEBHOOK')
+        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+        tmAPI.getWebHookInfo((req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+    }
+
+    if (DEV_MODE) {
+        console.log('SET DEV WEBHOOK')
+        tmAPI.setWebHook('https://7886c393.ngrok.io:443', (req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+        tmAPI.getWebHookInfo((req, res) => {
+            console.log(res.body)
+            console.log('\n')
+        })
+    }
+
+    const chatRouter = require('./routes/bot')(app, db, token, tmAPI)
+    const indexRouter = require('./routes/index')(app, db, tmAPI)
 
     http.createServer(app).listen(80)
 
