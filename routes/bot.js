@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const request = require('request')
 const parseString = require('xml2js').parseString
 
@@ -18,8 +19,6 @@ module.exports = function(app, db, token, tmAPI) {
             res.status(200).send({})
             return
         }
-
-        console.log(hasLocation, 'hasLocation')
 
         if (hasLocation) {
             const { latitude, longitude } = req.body.message.location
@@ -58,7 +57,7 @@ module.exports = function(app, db, token, tmAPI) {
 
         usersCollection.insertOne(userObject)
 
-        if (message.text === '/myactivity@MyChatAnalyzerBot') {
+        if (message.text.indexOf('/myactivity') !== -1) {
             const { chat_id, user_id, first_name, last_name } = userObject
             usersCollection
                 .find({ user_id, chat_id })
@@ -70,6 +69,29 @@ module.exports = function(app, db, token, tmAPI) {
                 })
         }
 
+        if (message.text.indexOf('/allactivity') !== -1) {
+            const { chat_id } = userObject
+            usersCollection.find({ chat_id }).toArray((err, items) => {
+                const usersGroupByUserId = _.groupBy(items, o => o.user_id)
+
+                let messageResponse = ''
+
+                Object.keys(usersGroupByUserId).forEach(id => {
+                    const percent =
+                        (usersGroupByUserId[id].length / items.length) * 100
+                    const userFullName =
+                        usersGroupByUserId[id][0].first_name +
+                        ' ' +
+                        usersGroupByUserId[id][0].last_name
+                    const activityPercent = percent.toFixed(2)
+
+                    messageResponse =
+                        userFullName + ' : ' + activityPercent + '\n'
+                })
+
+                tmAPI.sendMessage({ chat_id, text: messageResponse })
+            })
+        }
         res.status(200).send({})
     })
 
