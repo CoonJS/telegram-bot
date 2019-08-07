@@ -57,7 +57,7 @@ module.exports = function(app, db, token, tmAPI) {
 
         usersCollection.insertOne(userObject)
 
-        if (message.text.indexOf('/myactivity') !== -1) {
+        if (message.text && message.text.indexOf('/myactivity') !== -1) {
             const { chat_id, user_id, first_name, last_name } = userObject
             usersCollection
                 .find({ user_id, chat_id })
@@ -69,7 +69,7 @@ module.exports = function(app, db, token, tmAPI) {
                 })
         }
 
-        if (message.text.indexOf('/allactivity') !== -1) {
+        if (message.text && message.text.indexOf('/allactivity') !== -1) {
             const { chat_id } = userObject
             usersCollection.find({ chat_id }).toArray((err, items) => {
                 const usersGroupByUserId = _.groupBy(items, o => o.user_id)
