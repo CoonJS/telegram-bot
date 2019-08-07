@@ -74,7 +74,7 @@ module.exports = function(app, db, token, tmAPI) {
             usersCollection.find({ chat_id }).toArray((err, items) => {
                 const usersGroupByUserId = _.groupBy(items, o => o.user_id)
 
-                let messageResponse = 'Users Activity Statistics: \n'
+                let messageResponse = 'Users Activity Statistics: \n\n'
 
                 Object.keys(usersGroupByUserId).forEach(id => {
                     const percent =
@@ -83,10 +83,10 @@ module.exports = function(app, db, token, tmAPI) {
                         usersGroupByUserId[id][0].first_name +
                         ' ' +
                         usersGroupByUserId[id][0].last_name
-                    const activityPercent = percent.toFixed(2)
+                    const activityPercent = percent.toFixed(2) + ' %'
 
                     messageResponse +=
-                        userFullName + ' : ' + activityPercent + '\n'
+                        userFullName + ': ' + activityPercent + '\n'
                 })
 
                 tmAPI.sendMessage({ chat_id, text: messageResponse })
