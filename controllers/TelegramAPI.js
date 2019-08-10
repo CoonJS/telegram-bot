@@ -19,7 +19,15 @@ class TelegramAPIController {
 
         const query = queryString.stringify(data)
 
-        request(`${this.rootURL}/sendMessage?${query}`, { json: true }, cb)
+        this.sendChatAction({ chat_id }, () => {
+            setTimeout(() => {
+                request(
+                    `${this.rootURL}/sendMessage?${query}`,
+                    { json: true },
+                    cb
+                )
+            }, 1000)
+        })
     }
 
     getUpdates(cb) {
@@ -68,6 +76,16 @@ class TelegramAPIController {
 
         request(
             `${this.rootURL}/sendMessage?${query}`,
+            {
+                json: true,
+            },
+            cb
+        )
+    }
+
+    sendChatAction({ chat_id, action = 'typing' }, cb) {
+        request(
+            `${this.rootURL}/sendChatAction?chat_id=${chat_id}&action=${action}`,
             {
                 json: true,
             },

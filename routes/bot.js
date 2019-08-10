@@ -2,10 +2,23 @@ const _ = require('lodash')
 const request = require('request')
 const parseString = require('xml2js').parseString
 
-module.exports = function(app, db, token, tmAPI) {
+const ChatMessage = require('../ChatMessage')
+
+const COMMANDS = {
+    START: '/start',
+    HELP: '/help',
+    SEND_ALL_ACTIVITY: '/allactivity',
+    SEND_MY_ACTIVITY: '/myactivity',
+}
+
+const isCommandTriggered = (command, message) => {
+    return message.text && message.text.indexOf(command) !== -1
+}
+
+module.exports = (app, db, token, tmAPI) => {
     const usersCollection = db.collection('users')
 
-    app.post(`/${token}/`, (req, res) => {
+    app.post(`/${token}/`, async (req, res) => {
         const message = req.body.message
 
         console.log(req.body, 'req.body')
@@ -57,7 +70,52 @@ module.exports = function(app, db, token, tmAPI) {
 
         usersCollection.insertOne(userObject)
 
-        if (message.text && message.text.indexOf('/myactivity') !== -1) {
+        if (
+            isCommandTriggered(COMMANDS.START, message) ||
+            isCommandTriggered(COMMANDS.HELP, message)
+        ) {
+            const { chat_id } = userObject
+
+            tmAPI.sendMessage(
+                {
+                    chat_id,
+                    text: ChatMessage.HELLO_MESSAGE,
+                },
+                () => {
+                    tmAPI.sendMessage(
+                        {
+                            chat_id,
+                            text: ChatMessage.FIRST_POSSIBILITY,
+                        },
+                        () => {
+                            tmAPI.sendMessage(
+                                {
+                                    chat_id,
+                                    text: ChatMessage.SECOND_POSSIBILITY,
+                                },
+                                () => {
+                                    tmAPI.sendMessage(
+                                        {
+                                            chat_id,
+                                            text: ChatMessage.THIRD_POSSIBILITY,
+                                        },
+                                        () => {
+                                            tmAPI.sendMessage({
+                                                chat_id,
+                                                text:
+                                                    ChatMessage.FOURTH_POSSIBILITY,
+                                            })
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            )
+        }
+
+        if (isCommandTriggered(COMMANDS.SEND_MY_ACTIVITY, message)) {
             const { chat_id, user_id, first_name, last_name } = userObject
             usersCollection
                 .find({ user_id, chat_id })
@@ -69,7 +127,7 @@ module.exports = function(app, db, token, tmAPI) {
                 })
         }
 
-        if (message.text && message.text.indexOf('/allactivity') !== -1) {
+        if (isCommandTriggered(COMMANDS.SEND_ALL_ACTIVITY, message)) {
             const { chat_id } = userObject
             usersCollection.find({ chat_id }).toArray((err, items) => {
                 const usersGroupByUserId = _.groupBy(items, o => o.user_id)
@@ -92,6 +150,7 @@ module.exports = function(app, db, token, tmAPI) {
                 tmAPI.sendMessage({ chat_id, text: messageResponse })
             })
         }
+
         res.status(200).send({})
     })
 
