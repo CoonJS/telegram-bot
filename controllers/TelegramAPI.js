@@ -26,7 +26,7 @@ class TelegramAPIController {
                     { json: true },
                     cb
                 )
-            }, 1000)
+            }, 1500)
         })
     }
 
