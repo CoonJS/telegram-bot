@@ -9,6 +9,7 @@ const COMMANDS = {
     HELP: '/help',
     SEND_ALL_ACTIVITY: '/allactivity',
     SEND_MY_ACTIVITY: '/myactivity',
+    TEST: '/test',
 }
 
 const isCommandTriggered = (command, message) => {
@@ -46,8 +47,6 @@ module.exports = (app, db, token, tmAPI) => {
                         const time = currentCondition.observation_time[0]
                         const temp = currentCondition.temp_C[0]
                         const windSpeed = currentCondition.windspeedKmph[0]
-
-                        console.log(time, temp, 'time', 'temp')
 
                         tmAPI.sendMessage({
                             chat_id: message.chat.id,
@@ -148,6 +147,14 @@ module.exports = (app, db, token, tmAPI) => {
                 })
 
                 tmAPI.sendMessage({ chat_id, text: messageResponse })
+            })
+        }
+
+        if (isCommandTriggered(COMMANDS.TEST, message)) {
+            const { chat_id } = userObject
+            tmAPI.sendHTMLMessage({
+                chat_id,
+                text: 'text',
             })
         }
 

@@ -59,7 +59,7 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     if (DEV_MODE) {
         console.log('SET DEV WEBHOOK')
-        tmAPI.setWebHook('https://e8084545.ngrok.io:443', (req, res) => {
+        tmAPI.setWebHook('https://fc849ca2.ngrok.io:443', (req, res) => {
             console.log(res.body)
             console.log('\n')
         })

@@ -11,10 +11,36 @@ class TelegramAPIController {
         request(`${this.rootURL}/getMe`, { json: true }, cb)
     }
 
-    sendMessage({ chat_id, text, options }, cb) {
+    sendMessage({ chat_id, text }, cb) {
         const data = {
             chat_id,
             text,
+        }
+
+        const query = queryString.stringify(data)
+
+        this.sendChatAction({ chat_id }, () => {
+            setTimeout(() => {
+                request(
+                    `${this.rootURL}/sendMessage?${query}`,
+                    { json: true },
+                    cb
+                )
+            }, 1500)
+        })
+    }
+
+    sendHTMLMessage({ chat_id, text }, cb) {
+        const data = {
+            chat_id,
+            text,
+            reply_markup: JSON.stringify({
+                inline_keyboard: [
+                    [{ text: 'Кнопка 1', callback_data: '1' }],
+                    [{ text: 'Кнопка 2', callback_data: 'data 2' }],
+                    [{ text: 'Кнопка 3', callback_data: 'text 3' }],
+                ],
+            }),
         }
 
         const query = queryString.stringify(data)
