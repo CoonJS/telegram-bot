@@ -24,18 +24,18 @@ app.use(
     })
 )
 
-// const options = PROD_MODE
-//     ? {
-//           key: fs.readFileSync(
-//               '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
-//               'utf8'
-//           ),
-//           cert: fs.readFileSync(
-//               '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
-//               'utf8'
-//           ),
-//       }
-//     : {}
+const options = PROD_MODE
+    ? {
+          key: fs.readFileSync(
+              '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
+              'utf8'
+          ),
+          cert: fs.readFileSync(
+              '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
+              'utf8'
+          ),
+      }
+    : {}
 
 MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     if (err) return console.log(err)
@@ -69,10 +69,10 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
         })
     }
 
-    const chatRouter = require('./routes/bot')(app, db, token, tmAPI)
-    const indexRouter = require('./routes/index')(app, db, tmAPI)
+    require('./routes/bot')(app, db, token, tmAPI)
+    require('./routes/index')(app, db, tmAPI)
 
     http.createServer(app).listen(80)
 
-    https.createServer({}, app).listen(443)
+    https.createServer(options, app).listen(443)
 })
