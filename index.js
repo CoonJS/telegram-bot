@@ -74,5 +74,5 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     http.createServer(app).listen(80)
 
-    https.createServer(options, app).listen(443)
+    https.createServer({}, app).listen(443)
 })
