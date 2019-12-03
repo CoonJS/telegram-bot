@@ -24,19 +24,6 @@ app.use(
     })
 )
 
-const options = PROD_MODE
-    ? {
-          key: fs.readFileSync(
-              '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
-              'utf8'
-          ),
-          cert: fs.readFileSync(
-              '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
-              'utf8'
-          ),
-      }
-    : {}
-
 MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     if (err) return console.log(err)
 
@@ -59,7 +46,7 @@ MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
 
     if (DEV_MODE) {
         console.log('SET DEV WEBHOOK')
-        tmAPI.setWebHook('https://a97c0bc2.ngrok.io:443', (req, res) => {
+        tmAPI.setWebHook('https://c3da70e1.ngrok.io:443', (req, res) => {
             console.log(res.body)
             console.log('\n')
         })

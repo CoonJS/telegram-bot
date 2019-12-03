@@ -30,6 +30,17 @@ class TelegramAPIController {
         })
     }
 
+    sendAudio({ chat_id, audio }, cb) {
+        const data = {
+            chat_id,
+            audio,
+        }
+
+        const query = queryString.stringify(data)
+
+        request(`${this.rootURL}/sendAudio?${query}`, { json: true }, cb)
+    }
+
     sendHTMLMessage({ chat_id, text }, cb) {
         const data = {
             chat_id,
