@@ -24,18 +24,18 @@ app.use(
     })
 )
 
-const options = PROD_MODE
-    ? {
-          key: fs.readFileSync(
-              '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
-              'utf8'
-          ),
-          cert: fs.readFileSync(
-              '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
-              'utf8'
-          ),
-      }
-    : {}
+// const options = PROD_MODE
+//     ? {
+//           key: fs.readFileSync(
+//               '/etc/letsencrypt/live/telegram-bot.oxem.ru/privkey.pem',
+//               'utf8'
+//           ),
+//           cert: fs.readFileSync(
+//               '/etc/letsencrypt/live/telegram-bot.oxem.ru/fullchain.pem',
+//               'utf8'
+//           ),
+//       }
+//     : {}
 
 MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
     if (err) return console.log(err)
