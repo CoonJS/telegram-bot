@@ -4,10 +4,8 @@ const http = require('http')
 const https = require('https')
 const express = require('express')
 const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient
 
 const token = require('./token')
-const dbConfig = require('./db_config')
 
 const app = express()
 const env = app.get('env')
@@ -37,42 +35,36 @@ const options = PROD_MODE
       }
     : {}
 
-MongoClient.connect(dbConfig.FULL_CONFIG_URL, (err, client) => {
-    if (err) return console.log(err)
+const TelegramApiController = require('./controllers/TelegramAPI')
+const tmAPI = new TelegramApiController(token)
 
-    const db = client.db('chat')
+if (PROD_MODE) {
+    console.log('SET PRODUCTION WEBHOOK')
+    tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
+        console.log(res.body)
+        console.log('\n')
+    })
+    tmAPI.getWebHookInfo((req, res) => {
+        console.log(res.body)
+        console.log('\n')
+    })
+}
 
-    const TelegramApiController = require('./controllers/TelegramAPI')
-    const tmAPI = new TelegramApiController(token)
+if (DEV_MODE) {
+    console.log('SET DEV WEBHOOK')
+    tmAPI.setWebHook('https://3fc94a6d.ngrok.io:443', (req, res) => {
+        console.log(res.body)
+        console.log('\n')
+    })
+    tmAPI.getWebHookInfo((req, res) => {
+        console.log(res.body)
+        console.log('\n')
+    })
+}
 
-    if (PROD_MODE) {
-        console.log('SET PRODUCTION WEBHOOK')
-        tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
-            console.log(res.body)
-            console.log('\n')
-        })
-        tmAPI.getWebHookInfo((req, res) => {
-            console.log(res.body)
-            console.log('\n')
-        })
-    }
+require('./routes/bot')(app, token, tmAPI)
+require('./routes/index')(app, tmAPI)
 
-    if (DEV_MODE) {
-        console.log('SET DEV WEBHOOK')
-        tmAPI.setWebHook('https://dc2f0e39.ngrok.io:443', (req, res) => {
-            console.log(res.body)
-            console.log('\n')
-        })
-        tmAPI.getWebHookInfo((req, res) => {
-            console.log(res.body)
-            console.log('\n')
-        })
-    }
+http.createServer(app).listen(80)
 
-    require('./routes/bot')(app, db, token, tmAPI)
-    require('./routes/index')(app, db, tmAPI)
-
-    http.createServer(app).listen(80)
-
-    https.createServer(options, app).listen(443)
-})
+https.createServer(options, app).listen(443)

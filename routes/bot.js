@@ -1,7 +1,3 @@
-const _ = require('lodash')
-const request = require('request')
-const parseString = require('xml2js').parseString
-
 const ChatMessage = require('../ChatMessage')
 
 const COMMANDS = {
@@ -14,9 +10,7 @@ const isCommandTriggered = (command, message) => {
     return message.text && message.text.indexOf(command) !== -1
 }
 
-module.exports = (app, db, token, tmAPI) => {
-    const usersCollection = db.collection('users')
-
+module.exports = (app, token, tmAPI) => {
     app.post(`/${token}/`, async (req, res) => {
         const message = req.body.message
 
@@ -39,8 +33,6 @@ module.exports = (app, db, token, tmAPI) => {
             date: message.date,
         }
 
-        usersCollection.insertOne(userObject)
-
         if (
             isCommandTriggered(COMMANDS.START, message) ||
             isCommandTriggered(COMMANDS.HELP, message)
@@ -50,14 +42,6 @@ module.exports = (app, db, token, tmAPI) => {
             tmAPI.sendMessage({
                 chat_id,
                 text: ChatMessage.HELLO_MESSAGE,
-            })
-        }
-
-        if (isCommandTriggered(COMMANDS.TEST, message)) {
-            const { chat_id } = userObject
-            tmAPI.sendHTMLMessage({
-                chat_id,
-                text: 'text',
             })
         }
 
