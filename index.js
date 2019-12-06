@@ -52,7 +52,7 @@ if (PROD_MODE) {
 
 if (DEV_MODE) {
     console.log('SET DEV WEBHOOK')
-    tmAPI.setWebHook('https://3fc94a6d.ngrok.io:443', (req, res) => {
+    tmAPI.setWebHook('https://77ebfeb9.ngrok.io:443', (req, res) => {
         console.log(res.body)
         console.log('\n')
     })

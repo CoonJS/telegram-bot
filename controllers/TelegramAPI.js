@@ -19,23 +19,15 @@ class TelegramAPIController {
 
         const query = queryString.stringify(data)
 
-        this.sendChatAction({ chat_id }, () => {
-            setTimeout(() => {
-                request(
-                    `${this.rootURL}/sendMessage?${query}`,
-                    { json: true },
-                    cb
-                )
-            }, 1500)
-        })
+        request(`${this.rootURL}/sendMessage?${query}`, { json: true }, cb)
     }
 
-    sendAudio({ chat_id, audio }, cb) {
+    sendAudio({ chat_id, audio, title = '' }, cb) {
         const data = {
             chat_id,
             audio,
+            title,
         }
-
         const query = queryString.stringify(data)
 
         request(`${this.rootURL}/sendAudio?${query}`, { json: true }, cb)

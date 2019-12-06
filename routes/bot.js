@@ -1,5 +1,5 @@
 const ChatMessage = require('../ChatMessage')
-
+const emojiMap = require('../emojiMap')
 const COMMANDS = {
     START: '/start',
     HELP: '/help',
@@ -52,6 +52,20 @@ module.exports = (app, token, tmAPI) => {
                 chat_id,
                 audio: 'http://www.largesound.com/ashborytour/sound/brobob.mp3',
             })
+        }
+
+        if (message.text.trim() !== '') {
+            const { chat_id } = userObject
+
+            const soundData = emojiMap[message.text]
+
+            if (soundData) {
+                tmAPI.sendAudio({
+                    chat_id,
+                    audio: soundData.sound,
+                    title: message.text,
+                })
+            }
         }
 
         res.status(200).send({})
