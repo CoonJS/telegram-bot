@@ -8,7 +8,7 @@
     "server:build": "NODE_ENV=production && node index.js",
     "front:dev": "webpack-dev-server",
     "front:build": "webpack",
-    "build:app": "npm run front:build && npm run server:build",
+    "build:app": "echo start && npm run front:build && npm run server:build",
     "ngrok": "./ngrok http 80",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
