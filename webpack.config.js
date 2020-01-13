@@ -14,6 +14,11 @@ module.exports = {
         port: 9000,
         watchContentBase: true,
         progress: true,
+        proxy: {
+            '**': {
+                target: 'http://localhost:8080',
+            },
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({

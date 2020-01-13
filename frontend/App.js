@@ -1,10 +1,46 @@
 import React from 'react'
 
+import { getData } from '../services/Api'
+
 export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            token: null,
+            data: null,
+        }
+    }
+
+    handleClick = () => {
+        this.authorize()
+    }
+
+    handleChange = e => {
+        this.setState({
+            token: e.target.value,
+        })
+    }
+
+    authorize = async () => {
+        const { data } = await getData('/getMe')
+
+        this.setState({
+            data,
+        })
+    }
+
     render() {
+        const { data } = this.state
         return (
             <div>
-                <b>Hello world!</b>
+                <input
+                    type="text"
+                    placeholder="Your bot token to authorize"
+                    onChange={this.handleChange}
+                />
+                <button onClick={this.handleClick}>Authorize</button>
+                <pre>{data ? JSON.stringify(data) : ''}</pre>
             </div>
         )
     }
