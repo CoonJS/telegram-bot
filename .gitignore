@@ -10,5 +10,7 @@ db_config.js
 .well-known
 .well-known/*
 
+package-lock.json
+
 
 client
