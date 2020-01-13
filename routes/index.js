@@ -1,5 +1,7 @@
+const path = require('path')
+
 module.exports = function(app) {
     app.get('/', (req, res) => {
-        res.status(200).send({})
+        res.sendFile(path.resolve('../client', 'index.html'))
     })
 }
