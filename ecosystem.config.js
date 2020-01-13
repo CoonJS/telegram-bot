@@ -4,7 +4,6 @@ module.exports = {
             name: 'tm-bot',
             script: 'npm',
             args: 'start',
-            watch: true,
             env: {
                 PORT: 80,
                 NODE_ENV: 'development',
