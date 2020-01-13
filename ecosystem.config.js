@@ -3,7 +3,7 @@ module.exports = {
         {
             name: 'tm-bot',
             script: 'npm',
-            args: 'run build:app',
+            args: 'start',
             watch: true,
             env: {
                 PORT: 80,
