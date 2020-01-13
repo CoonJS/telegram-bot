@@ -1,9 +1,5 @@
 const path = require('path')
 
-const token = require('../token')
-const TelegramApiController = require('../controllers/TelegramAPI')
-const tmAPI = new TelegramApiController(token)
-
 module.exports = function(app) {
     app.get('/', (req, res) => {
         res.sendFile(path.resolve('../client', 'index.html'))
