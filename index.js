@@ -8,12 +8,14 @@ const bodyParser = require('body-parser')
 const token = require('./token')
 
 const app = express()
+
 const env = app.get('env')
 const PROD_MODE = env === 'production'
 const DEV_MODE = env === 'development'
 
 console.log(`APP RUNNING IN ${env.toUpperCase()} MODE`)
 
+app.use(express.static('client'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
