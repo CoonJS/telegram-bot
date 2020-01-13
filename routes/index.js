@@ -10,6 +10,7 @@ module.exports = function(app) {
     })
 
     app.get('/getMe', (req, res) => {
+        console.log('getMEEEEEE == = ==  == = = = = ==')
         tmAPI.getMe((tReq, tRres) => {
             console.log(tReq, 'REQ=======')
             console.log(tRres, 'RES=======')
