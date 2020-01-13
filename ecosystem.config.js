@@ -2,8 +2,8 @@ module.exports = {
     apps: [
         {
             name: 'tm-bot',
-            script: 'npm',
-            args: 'start',
+            script: './index.js',
+            watch: true,
             env: {
                 PORT: 80,
                 NODE_ENV: 'development',
