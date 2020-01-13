@@ -4,11 +4,11 @@
   "description": "An example of telegram bot",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development && nodemon index.js",
-    "start:dev": "NODE_ENV=development && node index.js",
-    "dev:front": "webpack-dev-server",
-    "build:front": "webpack",
-    "start:prod": "NODE_ENV=production && node index.js",
+    "server:dev": "NODE_ENV=development && nodemon index.js",
+    "server:build": "NODE_ENV=production && node index.js",
+    "front:dev": "webpack-dev-server",
+    "front:build": "webpack",
+    "build:app": "npm run front:build && npm run server:build",
     "ngrok": "./ngrok http 80",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
