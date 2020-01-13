@@ -10,11 +10,11 @@ module.exports = function(app) {
     })
 
     app.get('/getMe', (req, res) => {
-        console.log('getMEEEEEE == = ==  == = = = = ==')
-        tmAPI.getMe((tReq, tRres) => {
-            console.log(tReq, 'REQ=======')
-            console.log(tRres, 'RES=======')
-        })
+        // console.log('getMEEEEEE == = ==  == = = = = ==')
+        // tmAPI.getMe((tReq, tRres) => {
+        //     console.log(tReq, 'REQ=======')
+        //     console.log(tRres, 'RES=======')
+        // })
         res.setHeader('Access-Control-Allow-Origin', '*')
         res.status(200).json({ a: 2 })
     })
