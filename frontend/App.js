@@ -24,7 +24,7 @@ export default class App extends React.Component {
                 {isAuthorized ? (
                     <div>{JSON.stringify(data)}</div>
                 ) : (
-                    <AuthForm onAuthhorize={this.handleAuthorize} />
+                    <AuthForm onAuthorize={this.handleAuthorize} />
                 )}
             </div>
         )
