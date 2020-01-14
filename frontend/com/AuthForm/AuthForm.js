@@ -1,8 +1,8 @@
 import React from 'react'
 
-import AuthForm from './com/AuthForm'
+import { Button, Input, Form } from 'element-react'
 
-import { getData } from '../services/Api'
+import { getData } from '../../../services/Api'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,9 +36,20 @@ export default class App extends React.Component {
     render() {
         const { data } = this.state
         return (
-            <div>
-                <AuthForm />
-            </div>
+            <Form>
+                <Form.Item>
+                    <Input
+                        type="text"
+                        placeholder="Your bot token to authorize"
+                        onChange={this.handleChange}
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" onClick={this.handleClick}>
+                        Authorize
+                    </Button>
+                </Form.Item>
+            </Form>
         )
     }
 }

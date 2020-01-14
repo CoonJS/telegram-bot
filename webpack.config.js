@@ -36,20 +36,14 @@ module.exports = {
                 },
             },
             {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                        },
-                    },
-                ],
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|svg|jpg|gif|ico)$/,
-                use: ['file-loader'],
+                test: /\.(png|svg|jpg|gif|ico|woff|ttf)$/,
+                use: {
+                    loader: 'file-loader',
+                },
             },
         ],
     },
