@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Input, Form } from 'element-react'
+import { Button, Input, Message } from 'element-react'
 
 import { getData } from '../../../services/Api'
 
@@ -26,11 +26,16 @@ export default class App extends React.Component {
 
     authorize = async () => {
         const { token } = this.state
-        const { data } = await getData('/getMe', { token })
+        try {
+            const response = await getData('/getMe', { token })
+            console.log(response, 'response')
 
-        this.setState({
-            data,
-        })
+            this.setState({
+                data: response.data,
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     render() {
