@@ -46,11 +46,11 @@ export default class App extends React.Component {
             <div style={styles.root}>
                 <div style={styles.wrapper}>
                     <Input
-                        type="password"
-                        value={token}
-                        autoComplete
                         autoFocus
+                        value={token}
                         size="large"
+                        type="password"
+                        autoComplete="on"
                         placeholder="Your bot token to authorize"
                         onChange={this.handleChange}
                     />
