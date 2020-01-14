@@ -15,19 +15,10 @@ axios.interceptors.response.use(
 )
 
 export const getData = async (url, params) => {
-    axios
-        .get(url, {
-            responseType: 'json',
-            params,
-        })
-        .then(response => {
-            console.log(response, 'response')
-            return response
-        })
-        .catch(error => {
-            console.log(error)
-            return error
-        })
+    return await axios.get(url, {
+        responseType: 'json',
+        params,
+    })
 }
 
 export const post = () => {}
