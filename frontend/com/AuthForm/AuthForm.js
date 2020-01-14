@@ -32,15 +32,14 @@ export default class App extends React.Component {
         try {
             const { data } = await getData('/getMe', { token })
             if (data.error_code === 404) {
-                console.log('error code')
                 Message.error(data.description)
-                this.setState({ isAuthorizing: false })
             }
 
             this.setState({
                 data,
             })
         } catch (e) {
+        } finally {
             this.setState({ isAuthorizing: false })
         }
     }
