@@ -30,6 +30,7 @@ export default class App extends React.Component {
         const { data } = await getData('/getMe', { token })
 
         if (data.error_code === 404) {
+            console.log('error code')
             Message.error(data.description)
             return
         }
