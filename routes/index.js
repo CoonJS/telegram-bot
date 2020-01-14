@@ -6,10 +6,19 @@ module.exports = function(app, tmApi) {
     })
 
     app.get('/getMe', (req, res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+
         tmApi.getMe({ token: req.query.token }, (tReq, tRes) => {
-            console.log(tReq, 'tReq')
-            res.setHeader('Access-Control-Allow-Origin', '*')
-            res.status(200).json(tRes.body)
+            const hasResponse = tRes !== undefined
+            if (hasResponse) {
+                res.status(200).json(tRes.body)
+            }
+
+            res.status(403).json({
+                title: 'Access denied',
+                error: 403,
+                success: false,
+            })
         })
     })
 }

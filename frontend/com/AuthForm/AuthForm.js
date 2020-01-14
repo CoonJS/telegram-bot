@@ -18,9 +18,9 @@ export default class App extends React.Component {
         this.authorize()
     }
 
-    handleChange = e => {
+    handleChange = token => {
         this.setState({
-            token: e.target.value,
+            token,
         })
     }
 
@@ -34,22 +34,19 @@ export default class App extends React.Component {
     }
 
     render() {
-        const { data } = this.state
+        const { data, token } = this.state
         return (
-            <Form>
-                <Form.Item>
-                    <Input
-                        type="text"
-                        placeholder="Your bot token to authorize"
-                        onChange={this.handleChange}
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" onClick={this.handleClick}>
-                        Authorize
-                    </Button>
-                </Form.Item>
-            </Form>
+            <div>
+                <Input
+                    type="text"
+                    value={token}
+                    placeholder="Your bot token to authorize"
+                    onChange={this.handleChange}
+                />
+                <Button type="primary" onClick={this.handleClick}>
+                    Authorize
+                </Button>
+            </div>
         )
     }
 }
