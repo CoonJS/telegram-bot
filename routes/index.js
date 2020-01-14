@@ -6,12 +6,9 @@ module.exports = function(app, tmApi) {
     })
 
     app.get('/getMe', (req, res) => {
-        console.log('getMEEEEEE == = ==  == = = = = ==')
-        tmApi.getMe((tReq, tRres) => {
-            // console.log(tReq, 'REQ=======')
-            console.log(tRres.body, 'RES=======')
+        tmApi.getMe((tReq, tRes) => {
+            res.setHeader('Access-Control-Allow-Origin', '*')
+            res.status(200).json(tRes.body)
         })
-        res.setHeader('Access-Control-Allow-Origin', '*')
-        res.status(200).json({ a: 2 })
     })
 }
