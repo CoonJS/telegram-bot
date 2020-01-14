@@ -21,12 +21,12 @@ export const getData = async (url, params) => {
             params,
         })
         .then(response => {
-            // console.log(response, 'response')
+            console.log(response, 'response')
             return response
         })
         .catch(error => {
-            // console.log(error)
-            return new Error()
+            console.log(error)
+            return error
         })
 }
 
