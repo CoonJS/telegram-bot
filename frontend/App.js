@@ -34,11 +34,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        const { data } = this.state
-        return (
-            <div>
-                <AuthForm />
-            </div>
-        )
+        return <AuthForm />
     }
 }

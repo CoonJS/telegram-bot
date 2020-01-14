@@ -6,7 +6,7 @@ module.exports = {
     mode: 'development',
     output: {
         path: path.resolve(__dirname, './client'),
-        filename: '[name].[contenthash].js',
+        filename: '[name].[hash].js',
     },
     devServer: {
         hotOnly: true,
@@ -22,7 +22,10 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            favicon: 'favicon.ico',
+            meta: {
+                viewport:
+                    'width=device-width, initial-scale=1, shrink-to-fit=no',
+            },
         }),
         new HtmlWebpackRootPlugin(),
     ],
