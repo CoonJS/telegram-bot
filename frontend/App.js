@@ -24,7 +24,9 @@ export default class App extends React.Component {
         return (
             <div>
                 {isAuthorized ? (
-                    <h1 style={{ color: '#fff' }}>{data.result.first_name}</h1>
+                    <h1 style={{ color: '#fff', marginBottom: '200px' }}>
+                        {data.result.first_name}
+                    </h1>
                 ) : (
                     <AuthForm onAuthorize={this.handleAuthorize} />
                 )}
