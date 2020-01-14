@@ -40,29 +40,29 @@ const options = PROD_MODE
 const TelegramApiController = require('./controllers/TelegramAPI')
 const tmAPI = new TelegramApiController(token)
 
-if (PROD_MODE) {
-    console.log('SET PRODUCTION WEBHOOK')
-    tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
-        console.log(res.body)
-        console.log('\n')
-    })
-    tmAPI.getWebHookInfo((req, res) => {
-        console.log(res.body)
-        console.log('\n')
-    })
-}
-
-if (DEV_MODE) {
-    console.log('SET DEV WEBHOOK')
-    tmAPI.setWebHook('https://77ebfeb9.ngrok.io:443', (req, res) => {
-        console.log(res.body)
-        console.log('\n')
-    })
-    tmAPI.getWebHookInfo((req, res) => {
-        console.log(res.body)
-        console.log('\n')
-    })
-}
+// if (PROD_MODE) {
+//     console.log('SET PRODUCTION WEBHOOK')
+//     tmAPI.setWebHook('https://telegram-bot.oxem.ru:443', (req, res) => {
+//         console.log(res.body)
+//         console.log('\n')
+//     })
+//     tmAPI.getWebHookInfo((req, res) => {
+//         console.log(res.body)
+//         console.log('\n')
+//     })
+// }
+//
+// if (DEV_MODE) {
+//     console.log('SET DEV WEBHOOK')
+//     tmAPI.setWebHook('https://77ebfeb9.ngrok.io:443', (req, res) => {
+//         console.log(res.body)
+//         console.log('\n')
+//     })
+//     tmAPI.getWebHookInfo((req, res) => {
+//         console.log(res.body)
+//         console.log('\n')
+//     })
+// }
 
 http.createServer(app).listen(80)
 

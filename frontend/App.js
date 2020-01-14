@@ -23,7 +23,8 @@ export default class App extends React.Component {
     }
 
     authorize = async () => {
-        const { data } = await getData('/getMe')
+        const { token } = this.state
+        const { data } = await getData('/getMe', { token })
 
         this.setState({
             data,

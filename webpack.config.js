@@ -16,7 +16,7 @@ module.exports = {
         progress: true,
         proxy: {
             '**': {
-                target: 'http://localhost:8080',
+                target: 'http://localhost',
             },
         },
     },
