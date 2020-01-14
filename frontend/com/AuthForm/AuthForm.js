@@ -11,6 +11,7 @@ export default class App extends React.Component {
         this.state = {
             token: null,
             data: null,
+            isAuthorizing: false,
         }
     }
 
@@ -27,21 +28,25 @@ export default class App extends React.Component {
     authorize = async () => {
         const { token } = this.state
 
-        const { data } = await getData('/getMe', { token })
+        this.setState({ isAuthorizing: true })
+        try {
+            const { data } = await getData('/getMe', { token })
+            if (data.error_code === 404) {
+                console.log('error code')
+                Message.error(data.description)
+                return
+            }
 
-        if (data.error_code === 404) {
-            console.log('error code')
-            Message.error(data.description)
-            return
+            this.setState({
+                data,
+            })
+        } catch (e) {
+            this.setState({ isAuthorizing: false })
         }
-
-        this.setState({
-            data,
-        })
     }
 
     render() {
-        const { token } = this.state
+        const { token, isAuthorizing } = this.state
         return (
             <div style={styles.root}>
                 <div style={styles.wrapper}>
@@ -57,6 +62,7 @@ export default class App extends React.Component {
                     <Button
                         type="primary"
                         onClick={this.handleClick}
+                        loading={isAuthorizing}
                         style={{ marginTop: '16px', height: '60px' }}
                     >
                         Authorize
@@ -79,5 +85,14 @@ const styles = {
             justifyContent: 'center',
         },
     },
-    wrapper: { display: 'flex', flexDirection: 'column', minWidth: '320px' },
+    wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: '320px',
+        padding: '24px 12px',
+        background:
+            'radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%)',
+        borderRadius: '8px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+    },
 }
