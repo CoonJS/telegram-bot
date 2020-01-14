@@ -13,7 +13,9 @@ export default class App extends React.Component {
     }
 
     handleAuthorize = ({ data }) => {
-        console.log(data)
+        if (data.error_code === 404) {
+            return
+        }
         this.setState({ data, isAuthorized: true })
     }
 
