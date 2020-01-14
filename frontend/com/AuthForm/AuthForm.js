@@ -5,6 +5,8 @@ import { Button, Input, Message } from 'element-react'
 import { getData } from '../../../services/Api'
 
 export default class App extends React.Component {
+    static propTypes = {}
+
     constructor(props) {
         super(props)
 
@@ -35,7 +37,7 @@ export default class App extends React.Component {
                 Message.error(data.description)
             }
 
-            this.setState({
+            this.props.onAuthorize({
                 data,
             })
         } catch (e) {

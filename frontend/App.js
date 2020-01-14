@@ -2,38 +2,31 @@ import React from 'react'
 
 import AuthForm from './com/AuthForm'
 
-import { getData } from '../services/Api'
-
 export default class App extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            token: null,
+            isAuthorized: false,
             data: null,
         }
     }
 
-    handleClick = () => {
-        this.authorize()
-    }
-
-    handleChange = e => {
-        this.setState({
-            token: e.target.value,
-        })
-    }
-
-    authorize = async () => {
-        const { token } = this.state
-        const { data } = await getData('/getMe', { token })
-
-        this.setState({
-            data,
-        })
+    handleAuthorize = ({ data }) => {
+        console.log(data)
+        this.setState({ data, isAuthorized: true })
     }
 
     render() {
-        return <AuthForm />
+        const { isAuthorized, data } = this.state
+        return (
+            <div>
+                {isAuthorized ? (
+                    <div>{JSON.stringify(data)}</div>
+                ) : (
+                    <AuthForm onAuthhorize={this.handleAuthorize} />
+                )}
+            </div>
+        )
     }
 }
