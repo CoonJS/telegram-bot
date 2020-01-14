@@ -8,8 +8,8 @@ module.exports = function(app, tmApi) {
     app.get('/getMe', (req, res) => {
         console.log('getMEEEEEE == = ==  == = = = = ==')
         tmApi.getMe((tReq, tRres) => {
-            console.log(tReq, 'REQ=======')
-            console.log(tRres, 'RES=======')
+            // console.log(tReq, 'REQ=======')
+            console.log(tRres.body, 'RES=======')
         })
         res.setHeader('Access-Control-Allow-Origin', '*')
         res.status(200).json({ a: 2 })
