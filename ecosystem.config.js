@@ -5,7 +5,7 @@ module.exports = {
             script: './index.js',
             watch: true,
             env: {
-                PORT: 80,
+                PORT: 8080,
                 NODE_ENV: 'development',
             },
             env_production: {
@@ -13,7 +13,7 @@ module.exports = {
                 out_file: 'out.log',
                 log_file: 'combined.log',
                 time: true,
-                PORT: 443,
+                PORT: 8443,
                 NODE_ENV: 'production',
             },
         },
