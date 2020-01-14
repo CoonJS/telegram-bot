@@ -4,11 +4,12 @@ const queryString = require('query-string')
 class TelegramAPIController {
     constructor(TOKEN) {
         this.token = TOKEN
-        this.rootURL = `http://api.telegram.org/bot${this.token}`
+        this.tmApiURL = 'http://api.telegram.org/bot'
+        this.rootURL = `${this.tmApiURL}${this.token}`
     }
 
-    getMe(cb) {
-        request(`${this.rootURL}/getMe`, { json: true }, cb)
+    getMe({ token }, cb) {
+        request(`${this.tmApiURL}/${token}/getMe`, { json: true }, cb)
     }
 
     sendMessage({ chat_id, text }, cb) {
