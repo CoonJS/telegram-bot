@@ -15,7 +15,7 @@ module.exports = function(app, tmApi) {
             }
 
             res.status(403).json({
-                message: 'Incorrect bot token',
+                message: 'Connection problem',
                 error: 403,
                 success: false,
             })
