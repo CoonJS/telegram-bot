@@ -64,9 +64,9 @@ const tmAPI = new TelegramApiController(token)
 //     })
 // }
 
-require('./routes/bot')(app, token, tmAPI)
-require('./routes/index')(app, tmAPI)
-
 http.createServer(app).listen(8080)
 
 https.createServer(options, app).listen(8443)
+
+require('./routes/bot')(app, token, tmAPI)
+require('./routes/index')(app, tmAPI)
