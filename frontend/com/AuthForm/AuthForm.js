@@ -63,9 +63,13 @@ export default class App extends React.Component {
                         type="primary"
                         onClick={this.handleClick}
                         loading={isAuthorizing}
-                        style={{ marginTop: '16px', height: '60px' }}
+                        style={{
+                            marginTop: '16px',
+                            height: '60px',
+                            fontSize: '16px',
+                        }}
                     >
-                        Authorize
+                        <strong>Authorize</strong>
                     </Button>
                 </div>
             </div>
@@ -91,7 +95,7 @@ const styles = {
         minWidth: '320px',
         padding: '24px 12px',
         background:
-            'radial-gradient(circle, rgb(238, 174, 202) 0%, rgb(148, 187, 233) 100%)',
+            'radial-gradient(circle, rgb(5, 24, 35) 0%, rgb(226, 208, 208) 100%)',
         borderRadius: '8px',
         boxShadow: '0 0 10px rgba(0,0,0,0.5)',
     },
