@@ -10,7 +10,5 @@ module.exports = function(app, tmApi) {
             res.setHeader('Access-Control-Allow-Origin', '*')
             res.status(200).json(tRes.body)
         })
-
-        res.send(200)
     })
 }
