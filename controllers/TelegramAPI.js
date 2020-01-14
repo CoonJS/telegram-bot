@@ -9,6 +9,10 @@ class TelegramAPIController {
     }
 
     getMe({ token }, cb) {
+        console.log(
+            `${this.tmApiURL}${token}/getMe`,
+            '`${this.tmApiURL}${token}/getMe`'
+        )
         request(`${this.tmApiURL}${token}/getMe`, { json: true }, cb)
     }
 
