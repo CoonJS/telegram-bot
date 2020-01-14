@@ -26,16 +26,17 @@ export default class App extends React.Component {
 
     authorize = async () => {
         const { token } = this.state
-        try {
-            const { data } = await getData('/getMe', { token })
-            console.log(data, 'data')
 
-            this.setState({
-                data,
-            })
-        } catch (e) {
-            console.log(e)
+        const { data } = await getData('/getMe', { token })
+
+        if (data.error_code === 404) {
+            Message.error(data.description)
+            return
         }
+
+        this.setState({
+            data,
+        })
     }
 
     render() {
