@@ -34,13 +34,12 @@ export default class App extends React.Component {
             if (data.error_code === 404) {
                 console.log('error code')
                 Message.error(data.description)
-                return
+                this.setState({ isAuthorizing: false })
             }
 
             this.setState({
                 data,
             })
-            this.setState({ isAuthorizing: false })
         } catch (e) {
             this.setState({ isAuthorizing: false })
         }
