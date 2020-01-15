@@ -32,10 +32,7 @@ export default class App extends React.Component {
 
     loadProfilePhoto = async ({ user_id }) => {
         const { data } = await getData('/getUserProfilePhoto', { user_id })
-        const profileImageUrl = `https://api.telegram.org/file/bot${localStorage.getItem(
-            'token'
-        )}/${data.result.file_path}`
-        this.setState({ profileImageUrl })
+        this.setState({ profileImageUrl: data.file })
     }
 
     handleAuthorize = ({ data, token }) => {

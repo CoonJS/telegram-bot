@@ -28,7 +28,18 @@ class TelegramAPIController {
                 const hasResponse = data !== undefined
                 if (hasResponse) {
                     const { file_id } = data.result.photos[0][0]
-                    this.getFileByFileId({ token, file_id }, cb)
+                    this.getFileByFileId({ token, file_id }, (fReq, fRes) => {
+                        console.log(
+                            `https://api.telegram.org/file/bot${token}/${fRes.body.result.file_path}`,
+                            'FILE'
+                        )
+
+                        request(
+                            `https://api.telegram.org/file/bot${token}/${fRes.body.result.file_path}`,
+                            { encoding: null },
+                            cb
+                        )
+                    })
                 }
             }
         )

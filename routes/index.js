@@ -26,8 +26,13 @@ module.exports = function(app, tmApi) {
         tmApi.getUserProfilePhoto({ token, user_id }, (tReq, tRes) => {
             const hasResponse = tRes !== undefined
             if (hasResponse) {
-                console.log(tRes.body)
-                res.status(200).json(tRes.body)
+                const data =
+                    'data:' +
+                    tRes.headers['content-type'] +
+                    ';base64,' +
+                    new Buffer.from(tRes.body).toString('base64')
+
+                res.status(200).json({ file: data })
                 return
             }
 
