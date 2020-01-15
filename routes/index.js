@@ -6,12 +6,11 @@ module.exports = function(app, tmApi) {
     })
 
     app.get('/getMe', (req, res) => {
-        res.setHeader('Access-Control-Allow-Origin', '*')
-
         tmApi.getMe({ token: req.query.token }, (tReq, tRes) => {
             const hasResponse = tRes !== undefined
             if (hasResponse) {
                 res.status(200).json(tRes.body)
+                return
             }
 
             res.status(403).json({

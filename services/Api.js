@@ -21,4 +21,14 @@ export const getData = async (url, params) => {
     })
 }
 
+export const getCurrentUser = async () => {
+    const token = localStorage.getItem('token')
+    return await axios.get('/getMe', {
+        responseType: 'json',
+        params: {
+            token,
+        },
+    })
+}
+
 export const post = () => {}

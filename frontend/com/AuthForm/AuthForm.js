@@ -39,6 +39,7 @@ export default class App extends React.Component {
 
             this.props.onAuthorize({
                 data,
+                token,
             })
         } catch (e) {
         } finally {
