@@ -9,11 +9,38 @@ class TelegramAPIController {
     }
 
     getMe({ token }, cb) {
-        console.log(
-            `${this.tmApiURL}${token}/getMe`,
-            '`${this.tmApiURL}${token}/getMe`'
-        )
         request(`${this.tmApiURL}${token}/getMe`, { json: true }, cb)
+    }
+
+    getUserProfilePhoto({ token, user_id, limit = 1, offset = 0 }, cb) {
+        const data = {
+            user_id,
+            limit,
+            offset,
+        }
+
+        const query = queryString.stringify(data)
+        request(
+            `${this.tmApiURL}${token}/getUserProfilePhotos?${query}`,
+            { json: true },
+            (tReq, tRes) => {
+                const data = tRes.body
+                const hasResponse = data !== undefined
+                if (hasResponse) {
+                    const { file_id } = data.result.photos[0][0]
+                    this.getFileByFileId({ token, file_id }, cb)
+                }
+            }
+        )
+    }
+
+    getFileByFileId({ token, file_id }, cb) {
+        const data = {
+            file_id,
+        }
+
+        const query = queryString.stringify(data)
+        request(`${this.tmApiURL}${token}/getFile?${query}`, { json: true }, cb)
     }
 
     sendMessage({ chat_id, text }, cb) {
@@ -69,9 +96,6 @@ class TelegramAPIController {
     }
 
     setWebHook(url, cb) {
-        console.log(
-            `${this.rootURL}/setWebhook?allowed_updates=message&url=${url}/${this.token}/`
-        )
         request(
             `${this.rootURL}/setWebhook?url=${url}/${this.token}/`,
             {

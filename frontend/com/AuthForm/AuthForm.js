@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button, Input, Message } from 'element-react'
 
-import { getData } from '../../../services/Api'
+import { authorize, getCurrentUser, getData } from '../../../services/Api'
 
 export default class App extends React.Component {
     static propTypes = {}
@@ -17,14 +17,20 @@ export default class App extends React.Component {
         }
     }
 
-    handleClick = () => {
-        this.authorize()
-    }
-
     handleChange = token => {
         this.setState({
             token,
         })
+    }
+
+    handleKeyDown = e => {
+        const hasEnterPressed = e.keyCode === 13
+
+        if (!hasEnterPressed) {
+            return
+        }
+
+        this.authorize()
     }
 
     authorize = async () => {
@@ -32,7 +38,7 @@ export default class App extends React.Component {
 
         this.setState({ isAuthorizing: true })
         try {
-            const { data } = await getData('/getMe', { token })
+            const { data } = await authorize({ token })
             if (data.error_code === 404) {
                 Message.error(data.description)
             }
@@ -60,11 +66,12 @@ export default class App extends React.Component {
                         autoComplete="on"
                         placeholder="Your bot token to authorize"
                         disabled={isAuthorizing}
+                        onKeyDown={this.handleKeyDown}
                         onChange={this.handleChange}
                     />
                     <Button
                         type="primary"
-                        onClick={this.handleClick}
+                        onClick={this.authorize}
                         loading={isAuthorizing}
                         style={{
                             marginTop: '16px',

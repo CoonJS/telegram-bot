@@ -2,7 +2,7 @@ import React from 'react'
 
 import AuthForm from './com/AuthForm'
 
-import { getCurrentUser } from '../services/Api'
+import { getCurrentUser, getData } from '../services/Api'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -11,6 +11,7 @@ export default class App extends React.Component {
         this.state = {
             data: null,
             isAuthorized: null,
+            profileImageUrl: null,
         }
     }
 
@@ -20,8 +21,21 @@ export default class App extends React.Component {
 
     loadUser = async () => {
         const { data } = await getCurrentUser()
+        const success = data.ok === true
 
-        this.setState({ isAuthorized: data.ok === true, data })
+        this.setState({ isAuthorized: success, data })
+
+        if (success) {
+            this.loadProfilePhoto({ user_id: data.result.id })
+        }
+    }
+
+    loadProfilePhoto = async ({ user_id }) => {
+        const { data } = await getData('/getUserProfilePhoto', { user_id })
+        const profileImageUrl = `https://api.telegram.org/file/bot${localStorage.getItem(
+            'token'
+        )}/${data.result.file_path}`
+        this.setState({ profileImageUrl })
     }
 
     handleAuthorize = ({ data, token }) => {
@@ -31,12 +45,20 @@ export default class App extends React.Component {
         this.setState({ data, isAuthorized: true }, () => {
             localStorage.setItem('token', token)
         })
+
+        this.loadProfilePhoto()
     }
 
     render() {
-        const { isAuthorized, data } = this.state
+        const { isAuthorized, data, profileImageUrl } = this.state
         return (
             <div>
+                <div style={styles.imageWrap}>
+                    {profileImageUrl && (
+                        <img src={profileImageUrl} alt="user_image" />
+                    )}
+                </div>
+
                 {isAuthorized === true && (
                     <h1 style={{ color: '#fff', marginBottom: '200px' }}>
                         {data.result.first_name}
@@ -48,4 +70,13 @@ export default class App extends React.Component {
             </div>
         )
     }
+}
+
+const styles = {
+    imageWrap: {
+        display: 'flex',
+        padding: '12px 0',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 }

@@ -15,14 +15,27 @@ axios.interceptors.response.use(
 )
 
 export const getData = async (url, params) => {
+    const token = localStorage.getItem('token')
     return await axios.get(url, {
         responseType: 'json',
-        params,
+        params: {
+            ...params,
+            token,
+        },
     })
 }
 
 export const getCurrentUser = async () => {
     const token = localStorage.getItem('token')
+    return await axios.get('/getMe', {
+        responseType: 'json',
+        params: {
+            token,
+        },
+    })
+}
+
+export const authorize = async ({ token }) => {
     return await axios.get('/getMe', {
         responseType: 'json',
         params: {

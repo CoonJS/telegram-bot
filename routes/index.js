@@ -20,4 +20,22 @@ module.exports = function(app, tmApi) {
             })
         })
     })
+
+    app.get('/getUserProfilePhoto', (req, res) => {
+        const { token, user_id } = req.query
+        tmApi.getUserProfilePhoto({ token, user_id }, (tReq, tRes) => {
+            const hasResponse = tRes !== undefined
+            if (hasResponse) {
+                console.log(tRes.body)
+                res.status(200).json(tRes.body)
+                return
+            }
+
+            res.status(403).json({
+                message: 'Connection problem',
+                error: 403,
+                success: false,
+            })
+        })
+    })
 }
