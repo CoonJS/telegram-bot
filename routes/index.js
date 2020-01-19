@@ -9,6 +9,7 @@ module.exports = function(app, tmApi) {
         tmApi.getMe({ token: req.query.token }, (tReq, tRes) => {
             const hasResponse = tRes !== undefined
             const tmResponse = hasResponse ? tRes.body : { ok: false }
+            console.log(tmResponse, 'tmResponse')
             const success = tmResponse.ok === true
 
             if (hasResponse && !success && tmResponse.error_code === 404) {
