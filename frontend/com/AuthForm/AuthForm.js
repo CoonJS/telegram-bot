@@ -40,7 +40,6 @@ export default class App extends React.Component {
         try {
             const { data } = await authorize({ token })
             if (data.error_code === 404) {
-                console.log(data, 'data')
                 Message.error(data.description)
             }
 
@@ -48,8 +47,8 @@ export default class App extends React.Component {
                 data,
                 token,
             })
-        } catch (e) {
-            this.props.onAuthorize({ data: { error_code: 404 } })
+        } catch (data) {
+            this.props.onAuthorize({ data })
         } finally {
             this.setState({ isAuthorizing: false })
         }

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-react'
 import EventEmitter from 'events'
 
 const event = new EventEmitter()
@@ -11,7 +10,7 @@ axios.interceptors.response.use(
     function(error) {
         const errorResponse = error.response
         if (errorResponse.status === 403) {
-            event.emit('api-error')
+            event.emit('api-error', errorResponse.data)
         }
 
         if (errorResponse.status === 401) {
@@ -27,7 +26,7 @@ export const onUnauthorized = cb => {
 }
 
 export const onAPIError = cb => {
-    event.on('api-error', cb)
+    event.on('api-error', data => cb(data))
 }
 
 export const getData = async (url, params) => {

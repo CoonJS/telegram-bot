@@ -29,15 +29,17 @@ export default class App extends React.Component {
         this.loadUser()
 
         onUnauthorized(() => {
+            console.log('unauth')
             if (isAuthorized) {
                 Message.error('Unauthorized')
             }
             this.setState({ isAuthorized: false })
         })
 
-        onAPIError(() => {
+        onAPIError(({ message }) => {
+            console.log('API ERR', message)
             this.setState({ isAuthorized: false })
-            Message.error('Connection problems')
+            Message.error(message)
         })
     }
 
@@ -64,6 +66,11 @@ export default class App extends React.Component {
     }
 
     handleAuthorize = ({ data, token }) => {
+        if (data.status === 403 || data.status === 401) {
+            Message.error(data.data.message)
+            return
+        }
+
         if (data.error_code === 404) {
             Message.error('Bot not found')
             return
