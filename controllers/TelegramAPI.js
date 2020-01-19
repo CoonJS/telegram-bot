@@ -12,6 +12,19 @@ class TelegramAPIController {
         request(`${this.tmApiURL}${token}/getMe`, { json: true }, cb)
     }
 
+    getChat({ token, user_id }, cb) {
+        const data = {
+            chat_id: '-1001035909203',
+        }
+
+        const query = queryString.stringify(data)
+        request(
+            `${this.tmApiURL}${token}/getChatMembersCount?${query}`,
+            { json: true },
+            cb
+        )
+    }
+
     getUserProfilePhoto({ token, user_id, limit = 1, offset = 0 }, cb) {
         const data = {
             user_id,
@@ -29,11 +42,6 @@ class TelegramAPIController {
                 if (hasResponse) {
                     const { file_id } = data.result.photos[0][0]
                     this.getFileByFileId({ token, file_id }, (fReq, fRes) => {
-                        console.log(
-                            `https://api.telegram.org/file/bot${token}/${fRes.body.result.file_path}`,
-                            'FILE'
-                        )
-
                         request(
                             `https://api.telegram.org/file/bot${token}/${fRes.body.result.file_path}`,
                             { encoding: null },

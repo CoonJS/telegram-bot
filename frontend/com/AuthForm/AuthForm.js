@@ -40,6 +40,7 @@ export default class App extends React.Component {
         try {
             const { data } = await authorize({ token })
             if (data.error_code === 404) {
+                console.log(data, 'data')
                 Message.error(data.description)
             }
 
@@ -48,6 +49,7 @@ export default class App extends React.Component {
                 token,
             })
         } catch (e) {
+            this.props.onAuthorize({ data: { error_code: 404 } })
         } finally {
             this.setState({ isAuthorizing: false })
         }
@@ -79,7 +81,7 @@ export default class App extends React.Component {
                             fontSize: '16px',
                         }}
                     >
-                        <strong>Authorize</strong>
+                        <strong>{isAuthorizing ? '' : 'AUTHORIZE'}</strong>
                     </Button>
                 </div>
             </div>
@@ -105,7 +107,7 @@ const styles = {
         minWidth: '320px',
         padding: '24px 12px',
         background:
-            'radial-gradient(circle, rgb(5, 24, 35) 0%, rgb(226, 208, 208) 100%)',
+            'radial-gradient(circle, rgb(11, 102, 155) 0%, rgb(176, 197, 212) 100%)',
         borderRadius: '8px',
         boxShadow: '0 0 10px rgba(0,0,0,0.5)',
     },

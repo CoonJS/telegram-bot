@@ -10,6 +10,7 @@
       }
     ],
     "@babel/plugin-transform-async-to-generator",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }]
   ]
 }
