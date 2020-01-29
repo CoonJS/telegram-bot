@@ -121,7 +121,7 @@ class TelegramAPIController {
     setWebHook({ token }, cb) {
         const url = this.DEV_MODE
             ? 'https://568b2ca7.ngrok.io:443'
-            : 'https://telegram-bot.oxem.ru/'
+            : 'https://telegram-bot.oxem.ru'
         request(
             `${this.tmApiURL}${token}/setWebhook?url=${url}/${this.token}/`,
             {
