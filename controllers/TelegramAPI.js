@@ -2,10 +2,14 @@ const request = require('request')
 const queryString = require('query-string')
 
 class TelegramAPIController {
-    constructor(TOKEN) {
+    constructor(TOKEN, app) {
         this.token = TOKEN
         this.tmApiURL = 'http://api.telegram.org/bot'
         this.rootURL = `${this.tmApiURL}${this.token}`
+
+        const env = app.get('env')
+        this.PROD_MODE = env === 'production'
+        this.DEV_MODE = env === 'development'
     }
 
     getMe({ token }, cb) {
@@ -114,9 +118,12 @@ class TelegramAPIController {
         request(`${this.rootURL}/getUpdates`, { json: true }, cb)
     }
 
-    setWebHook(url, cb) {
+    setWebHook({ token }, cb) {
+        const url = this.DEV_MODE
+            ? 'https://568b2ca7.ngrok.io:443'
+            : 'https://telegram-bot.oxem.ru/'
         request(
-            `${this.rootURL}/setWebhook?url=${url}/${this.token}/`,
+            `${this.tmApiURL}${token}/setWebhook?url=${url}/${this.token}/`,
             {
                 json: true,
             },

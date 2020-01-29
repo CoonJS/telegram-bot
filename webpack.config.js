@@ -1,6 +1,8 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackRootPlugin = require('html-webpack-root-plugin')
+
 module.exports = {
     devtool: 'eval-source-map',
     entry: path.resolve('./frontend/index.js'),
@@ -29,6 +31,9 @@ module.exports = {
             },
         }),
         new HtmlWebpackRootPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
     ],
     module: {
         rules: [

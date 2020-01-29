@@ -6,10 +6,12 @@ module.exports = function(app, tmApi) {
     })
 
     app.get('/getMe', (req, res) => {
-        tmApi.getMe({ token: req.query.token }, (tReq, tRes) => {
+        const token = req.query.token
+        tmApi.getMe({ token }, (tReq, tRes) => {
+            tmApi.setWebHook({ token })
+
             const hasResponse = tRes !== undefined
             const tmResponse = hasResponse ? tRes.body : { ok: false }
-            console.log(tmResponse, 'tmResponse')
             const success = tmResponse.ok === true
 
             if (hasResponse && !success && tmResponse.error_code === 404) {

@@ -38,7 +38,7 @@ const options = PROD_MODE
     : {}
 
 const TelegramApiController = require('./controllers/TelegramAPI')
-const tmAPI = new TelegramApiController(token)
+const tmAPI = new TelegramApiController(token, app)
 
 // if (PROD_MODE) {
 //     console.log('SET PRODUCTION WEBHOOK')
@@ -54,7 +54,7 @@ const tmAPI = new TelegramApiController(token)
 //
 // if (DEV_MODE) {
 //     console.log('SET DEV WEBHOOK')
-//     tmAPI.setWebHook('https://77ebfeb9.ngrok.io:443', (req, res) => {
+//     tmAPI.setWebHook('https://568b2ca7.ngrok.io:443', (req, res) => {
 //         console.log(res.body)
 //         console.log('\n')
 //     })
@@ -64,9 +64,27 @@ const tmAPI = new TelegramApiController(token)
 //     })
 // }
 
-http.createServer(app).listen(80)
+const httpServer = http.createServer(app).listen(80)
 
-https.createServer(options, app).listen(443)
+const httpsServer = https.createServer(options, app).listen(443)
 
-require('./routes/bot')(app, token, tmAPI)
+const ioServer = require('socket.io')
+
+const io = new ioServer()
+
+io.attach(httpServer)
+io.attach(httpsServer)
+
+io.on('connection', socket => {
+    console.log('a user connected')
+    socket.on('disconnect', function() {
+        console.log('user disconnected')
+    })
+
+    socket.on('test', function(msg) {
+        console.log('message: ' + msg.a)
+    })
+})
+
+require('./routes/bot')(app, token, tmAPI, io)
 require('./routes/index')(app, tmAPI)

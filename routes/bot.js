@@ -10,11 +10,11 @@ const isCommandTriggered = (command, message) => {
     return message.text && message.text.indexOf(command) !== -1
 }
 
-module.exports = (app, token, tmAPI) => {
+module.exports = (app, token, tmAPI, io) => {
     app.post(`/${token}/`, async (req, res) => {
         const message = req.body.message
 
-        console.log(req.body, 'req.body')
+        // console.log(req.body, 'req.body')
 
         const hasMessage = message !== undefined
 
@@ -31,7 +31,10 @@ module.exports = (app, token, tmAPI) => {
             last_name: message.from.last_name,
             username: message.from.username,
             date: message.date,
+            message: message.text,
         }
+
+        io.emit('message', userObject)
 
         if (
             isCommandTriggered(COMMANDS.START, message) ||

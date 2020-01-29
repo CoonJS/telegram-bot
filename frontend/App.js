@@ -1,5 +1,26 @@
 import React from 'react'
-import { Message } from 'element-react'
+import { Message, Notification } from 'element-react'
+
+const DEV_MODE = process.env.NODE_ENV === 'development'
+const socketURL = DEV_MODE
+    ? 'http://localhost'
+    : 'https://telegram-bot.oxem.ru/'
+
+const socket = require('socket.io-client')(socketURL, {
+    transports: ['websocket', 'polling', 'flashsocket'],
+})
+
+socket.on('connect', () => {
+    console.log('connect')
+})
+
+socket.on('message', data => {
+    Notification.success(data.message)
+})
+
+socket.on('disconnect', function() {
+    console.log('disconnect')
+})
 
 import Loader from './com/Loader'
 import AuthForm from './com/AuthForm'
