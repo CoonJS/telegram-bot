@@ -76,13 +76,9 @@ io.attach(httpServer)
 io.attach(httpsServer)
 
 io.on('connection', socket => {
-    console.log('a user connected')
+    console.log('SOCKET CONNECTED')
     socket.on('disconnect', function() {
-        console.log('user disconnected')
-    })
-
-    socket.on('test', function(msg) {
-        console.log('message: ' + msg.a)
+        console.log('SOCKET WAS DISCONNECTED')
     })
 })
 
