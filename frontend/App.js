@@ -2,9 +2,7 @@ import React from 'react'
 import { Message, Notification } from 'element-react'
 
 const DEV_MODE = process.env.NODE_ENV === 'development'
-const socketURL = DEV_MODE
-    ? 'http://localhost'
-    : 'https://telegram-bot.oxem.ru/'
+const socketURL = DEV_MODE ? 'http://localhost' : 'https://telegram-bot.oxem.ru'
 
 const socket = require('socket.io-client')(socketURL, {
     transports: ['websocket', 'polling', 'flashsocket'],
