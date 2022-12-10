@@ -26,7 +26,7 @@
     "body-parser": "^1.19.0",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lodash": "^4.17.15",
     "query-string": "^6.8.2",
     "react": "^16.12.0",
